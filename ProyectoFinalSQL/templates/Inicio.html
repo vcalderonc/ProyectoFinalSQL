@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EntreCOL+</title>
+    <link rel="stylesheet" href="styleinicio.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <div class="logo"><span>Entrecol +</span></div>
+        <div class="right-section">
+            <a href="login.html" class="login-btn">Iniciar sesión</a>
+            <div class="search-icon" onclick="toggleSearchBar()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-bar" id="search-bar">
+        <input type="text" placeholder="Buscar libros o películas..." />
+        <select>
+    <option value="libros">Libros</option>
+    <option value="peliculas">Películas</option>
+  </select>
+    </div>
+
+    <div id="side-menu">
+        <ul>
+            <li onclick="">Inicio</li>
+            <li onclick="">Catálogo Multimedia</li>
+            <li onclick="">Cerrar Sesión</li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+
+    </div>
+
+    <div class="slider">
+        <div class="slides">
+            <img src="r.jpg" alt="Imagen 1">
+            <img src="rosa.png" alt="Imagen 2">
+            <img src="r.jpg" alt="Imagen 3">
+        </div>
+    </div>
+
+
+    <div class="access-grid">
+        <a href=""><img src="r.jpg" alt="Acceso 1"></a>
+        <a href=""><img src="rosa.png" alt="Acceso 2"></a>
+        <a href=""><img src="r.jpg" alt="Acceso 3"></a>
+        <a href=""><img src="rosa.png" alt="Acceso 4"></a>
+    </div>
+
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("side-menu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+
+        window.addEventListener("click", function(e) {
+            const menu = document.getElementById("side-menu");
+            const icon = document.querySelector(".menu-icon");
+            if (!menu.contains(e.target) && !icon.contains(e.target)) {
+                menu.style.display = "none";
+            }
+        });
+
+
+        function toggleSearchBar() {
+            const bar = document.getElementById("search-bar");
+            bar.style.display = (bar.style.display === "flex") ? "none" : "flex";
+        }
+
+        window.addEventListener("click", function(e) {
+            const bar = document.getElementById("search-bar");
+            const searchIcon = document.querySelector(".search-icon");
+            if (!bar.contains(e.target) && !searchIcon.contains(e.target)) {
+                bar.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

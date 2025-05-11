@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administrador - EntreCOL+</title>
+    <link rel="stylesheet" href="admin.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+
+<body>
+
+    <header>
+        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+        <div class="logo"><span>Entrecol +</span></div>
+    </header>
+
+
+
+    <div id="side-menu" class="dropdown-menu">
+        <ul>
+            <li><a href="Inicio.html">Inicio</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li><a href="">Nómina</a></li>
+            <li><a href="">Catálogo Multimedia</a></li>
+            <li><a href="">Reportes</a></li>
+            <li><a href="">Configuración</a></li>
+            <li><a href="">Cerrar sesión</a></li>
+        </ul>
+    </div>
+
+
+    <div class="admin-container">
+
+        <div class="admin-banner">
+            <h1>Bienvenido, Administrador</h1>
+            <p>Aquí puedes gestionar empleados, nómina, reportes y catálogos.</p>
+        </div>
+
+        <div class="admin-grid">
+            <a href="empleados.html" class="admin-card">Gestionar empleados</a>
+            <a href="" class="admin-card">Revisar reportes</a>
+            <a href="" class="admin-card">Subir contenido multimedia</a>
+            <a href="" class="admin-card">Configuración del sistema</a>
+        </div>
+
+    </div>
+
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("side-menu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        window.addEventListener("click", function(e) {
+            const menu = document.getElementById("side-menu");
+            const icon = document.querySelector(".menu-icon");
+            if (!menu.contains(e.target) && !icon.contains(e.target)) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

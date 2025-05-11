@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 2px solid #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    font-family: 'Courier New', cursive;
+}
+
+.logo span {
+    text-decoration: underline dotted red;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: #fefeff;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    min-width: 200px;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-menu li {
+    padding: 10px 0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dropdown-menu a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+    display: block;
+}
+
+.dropdown-menu li:hover {
+    text-decoration: underline;
+}
+
+.dropdown-menu li {
+    padding: 10px 0;
+}
+
+.panel {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 20px;
+}
+
+.panel-banner {
+    background-color: #e8f3e8;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.panel-banner h1 {
+    margin: 0;
+    font-size: 26px;
+    color: #1c4c1c;
+}
+
+.panel-banner p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.empleado-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.empleado-card {
+    display: block;
+    background-color: #1c4c1c;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.empleado-card:hover {
+    background-color: #2d6f2d;
+}
