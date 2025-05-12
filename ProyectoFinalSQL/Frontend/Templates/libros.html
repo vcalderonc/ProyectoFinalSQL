@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo de Libros - EntreCOL+</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='libros.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <header>
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <div class="logo"><span>EntreCOL+</span></div>
+  </header>
+
+  <div id="side-menu" class="dropdown-menu">
+    <ul>
+      <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+      <li><a href="/peliculas">Películas</a></li>
+      <li><a href="/empleados">Nómina</a></li>
+      <li><a href="/login">Cerrar sesión</a></li>
+    </ul>
+  </div>
+
+  <main class="contenido">
+    <section class="banner">
+      <h1>📚 Catálogo de Libros</h1>
+      <p>Filtra por título, ISBN, editorial o fecha de publicación.</p>
+    </section>
+
+    <section class="buscar-libros">
+      <form method="get">
+        <input type="text" name="titulo" placeholder="🔍 Título del libro">
+        <input type="text" name="isbn" placeholder="🔢 ISBN">
+        <input type="text" name="editorial" placeholder="🏢 Editorial">
+        <input type="text" class="sizeDate" name="fecha" placeholder="📅 Fecha (MM/DD/AAAA)">
+        <button type="submit"><i class="fas fa-search"></i> Buscar</button>
+      </form>
+    </section>
+
+    <section class="resultados">
+      <h2>📖 Resultados</h2>
+      <div class="libros-grid">
+        {% for libro in libros %}
+          <div class="libro-card">
+            <h3>{{ libro.title }}</h3>
+            <p><strong>Autor:</strong> {{ libro.authors }}</p>
+            <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
+            <p><strong>Editorial:</strong> {{ libro.publisher }}</p>
+            <p><strong>Fecha publicación:</strong> {{ libro.publication_date }}</p>
+            <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
+          </div>
+        {% else %}
+          <p>No se encontraron libros.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("side-menu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    window.addEventListener("click", function (e) {
+      const menu = document.getElementById("side-menu");
+      const icon = document.querySelector(".menu-icon");
+      if (!menu.contains(e.target) && !icon.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>

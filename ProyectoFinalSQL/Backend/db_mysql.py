@@ -1,5 +1,68 @@
 # backend/db_mysql.py
+from pymongo import MongoClient
 import pymysql
+
+def conectar():
+    return pymysql.connect(
+        host="192.168.1.29",
+        user="root",
+        password="sistemas2024",  # <-- asegúrate de que esto sea correcto
+        database="nomina",
+        cursorclass=pymysql.cursors.DictCursor
+    )
+
+def conectar_movies():
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client["Movies"]
+    return db
+
+
+#peliculas MONGO-------------
+def obtener_peliculas(titulo=None, anio=None):
+    db = conectar_movies()
+    coleccion = db["peliculas"]
+    query = {}
+
+    if titulo and anio:
+        try:
+            query = {
+                "titulo": {"$regex": titulo, "$options": "i"},
+                "año": int(anio)
+            }
+        except ValueError:
+            query = {"titulo": {"$regex": titulo, "$options": "i"}}
+    elif titulo:
+        query = {"titulo": {"$regex": titulo, "$options": "i"}}
+    elif anio:
+        try:
+            query = {"año": int(anio)}
+        except ValueError:
+            query = {}
+
+    return list(coleccion.find(query, {"_id": 0}))
+
+#LIBROS MONGO
+def obtener_libros(titulo=None, isbn=None, fecha=None, editorial=None):
+    db = conectar_movies()
+    coleccion = db["libros"]
+    query = {}
+
+    if titulo and isinstance(titulo, str) and titulo.strip():
+        query["title"] = {"$regex": titulo.strip(), "$options": "i"}
+
+    if isbn and isinstance(isbn, str) and isbn.strip():
+        query["isbn"] = isbn.strip()
+
+    if fecha and isinstance(fecha, str) and fecha.strip():
+        query["publication_date"] = fecha.strip()  # formato: "9/16/2006"
+
+    if editorial and isinstance(editorial, str) and editorial.strip():
+        query["publisher"] = {"$regex": editorial.strip(), "$options": "i"}
+
+    return list(coleccion.find(query, {"_id": 0}))
+
+
+
 
 def conectar():
     return pymysql.connect(

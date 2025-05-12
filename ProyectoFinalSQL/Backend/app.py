@@ -5,7 +5,9 @@ from db_mysql import (
     empleados_por_dependencia,
     empleados_con_cargo,
     empleados_incapacitados,
-    obtener_info_completa_empleado
+    obtener_info_completa_empleado,
+    obtener_peliculas,
+    obtener_libros
 )
 
 app = Flask(
@@ -13,6 +15,30 @@ app = Flask(
     template_folder="../frontend/templates",
     static_folder="../frontend/static"
 )
+# ----------------------------
+# NoSql
+# ----------------------------
+
+@app.route("/libros", methods=["GET"])
+def libros():
+    titulo = request.args.get("titulo")
+    isbn = request.args.get("isbn")
+    fecha = request.args.get("fecha")
+    editorial = request.args.get("editorial")
+    resultado = obtener_libros(titulo, isbn, fecha, editorial)
+    return render_template("libros.html", libros=resultado)
+
+
+@app.route("/peliculas", methods=["GET"])
+def peliculas():
+    titulo = request.args.get("titulo")
+    anio = request.args.get("anio")
+   # genero = request.args.getlist("genero")
+    resultado = obtener_peliculas(titulo, anio)
+    return render_template("peliculas.html", peliculas=resultado)
+
+
+# SQL-------------------------
 
 # ----------------------------
 # Usuarios ficticios para login
