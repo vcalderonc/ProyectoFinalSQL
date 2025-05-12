@@ -118,3 +118,67 @@ header {
 .empleado-card:hover {
     background-color: #2d6f2d;
 }
+
+.buscar-empleado {
+    margin-top: 40px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.buscar-empleado input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
+
+.buscar-empleado button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #1c4c1c;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.buscar-empleado button:hover {
+    background-color: #2d6f2d;
+}
+
+.resultado-empleado {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.resultado-empleado table {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resultado-empleado th,
+.resultado-empleado td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.resultado-empleado h3 {
+    text-align: center;
+    color: #1c4c1c;
+}

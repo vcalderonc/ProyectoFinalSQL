@@ -2,63 +2,118 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Panel de Empleado - EntreCOL+</title>
-    <link rel="stylesheet" href="empleado.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Empleado - EntreCOL+</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='empleado.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
 <body>
 
-    <header>
-        <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-        <div class="logo"><span>Entrecol +</span></div>
-    </header>
+  <header>
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <div class="logo"><span>Entrecol +</span></div>
+  </header>
 
+  <div id="side-menu" class="dropdown-menu">
+    <ul>
+      <li><a href="/Inicio">Inicio</a></li>
+      <li><a href="/login">Cerrar sesión</a></li>
+    </ul>
+  </div>
 
-    <div id="side-menu" class="dropdown-menu">
-        <ul>
-            <li><a href="Inicio.html">Inicio</a></li>
-            <li><a href="ver_nomina.html">Ver mi nómina</a></li>
-            <li><a href="novedades.html">Registrar novedades</a></li>
-            <li><a href="perfil.html">Mi perfil</a></li>
-            <li><a href="login.html">Cerrar sesión</a></li>
-        </ul>
+  <div class="panel">
+    <div class="panel-banner">
+      <h1>Bienvenido, Empleado</h1>
+      <p>Aquí puedes consultar tu información de nómina y registrar novedades.</p>
+    </div>
+ 
+ </div>
+    <!-- 🔍 Sección de búsqueda por código -->
+    <div class="buscar-empleado">
+      <h2> Consultar Empleado (codigo)</h2>
+      <input type="text" id="codigoEmpleado" placeholder="Código del empleado">
+      <button onclick="buscarEmpleado()">Buscar</button>
     </div>
 
+    <div id="resultadoEmpleado" class="resultado-empleado"></div>
+  </div>
 
-    <div class="panel">
+  <div class="empleado-grid">
+      <a href="#" class="empleado-card">Cerrar sesión</a>
+  </div>
 
-        <div class="panel-banner">
-            <h1>Bienvenido, Empleado</h1>
-            <p>Aquí puedes consultar tu información de nómina y registrar novedades.</p>
-        </div>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("side-menu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
 
-        <div class="empleado-grid">
-            <a href="" class="empleado-card">Ver mi nómina</a>
-            <a href="" class="empleado-card">Registrar novedades</a>
-            <a href="" class="empleado-card">Mi perfil</a>
-            <a href="login.html" class="empleado-card">Cerrar sesión</a>
-        </div>
+    window.addEventListener("click", function (e) {
+      const menu = document.getElementById("side-menu");
+      const icon = document.querySelector(".menu-icon");
+      if (!menu.contains(e.target) && !icon.contains(e.target)) {
+        menu.style.display = "none";
+      }
+    });
 
-    </div>
+    function buscarEmpleado() {
+      const codigo = document.getElementById("codigoEmpleado").value;
+      fetch(`/empleado/info?codigo=${codigo}`)
+        .then(r => r.json())
+        .then(data => {
+          const contenedor = document.getElementById("resultadoEmpleado");
+          contenedor.innerHTML = "";
 
+          if (data.length === 0) {
+            contenedor.innerHTML = "<p>No se encontraron datos para ese código.</p>";
+            return;
+          }
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById("side-menu");
-            menu.style.display = (menu.style.display === "block") ? "none" : "block";
-        }
+          const emp = data[0];
 
-        window.addEventListener("click", function(e) {
-            const menu = document.getElementById("side-menu");
-            const icon = document.querySelector(".menu-icon");
-            if (!menu.contains(e.target) && !icon.contains(e.target)) {
-                menu.style.display = "none";
-            }
+        contenedor.innerHTML = `
+  <div class="resultado-empleado">
+    <h3>👤 Datos Personales</h3>
+    <table>
+      <tr><th>Código</th><td>${emp.codigo_empleado}</td></tr>
+      <tr><th>Nombre</th><td>${emp.nombre_empleado}</td></tr>
+      <tr><th>Cargo</th><td>${emp.nombre_cargo}</td></tr>
+      <tr><th>Dependencia</th><td>${emp.nombre_dependencia}</td></tr>
+      <tr><th>Sueldo</th><td>$${emp.sueldo}</td></tr>
+      <tr><th>EPS</th><td>${emp.nombre_eps}</td></tr>
+      <tr><th>ARL</th><td>${emp.nombre_arl}</td></tr>
+      <tr><th>Pensión</th><td>${emp.nombre_pension}</td></tr>
+    </table>
+
+    <h3 style="margin-top:30px;">📋 Novedades Laborales</h3>
+    <table>
+      <tr><th>Días trabajados</th><td>${emp.dias_trabajados}</td></tr>
+      <tr><th>Bonificación</th><td>$${emp.bonificacion}</td></tr>
+      <tr><th>Transporte</th><td>$${emp.transporte}</td></tr>
+    </table>
+
+    <h3 style="margin-top:30px;">🏖️ Vacaciones</h3>
+    <table>
+      <tr><th>Inicio</th><td>${emp.vac_inicio || "-"}</td></tr>
+      <tr><th>Fin</th><td>${emp.vac_fin || "-"}</td></tr>
+    </table>
+
+    <h3 style="margin-top:30px;">🩺 Incapacidad</h3>
+    <table>
+      <tr><th>Inicio</th><td>${emp.inc_inicio || "-"}</td></tr>
+      <tr><th>Fin</th><td>${emp.inc_fin || "-"}</td></tr>
+      <tr><th>Tipo</th><td>${emp.tipo_incapacidad || "-"}</td></tr>
+    </table>
+  </div>
+`;
+
         });
-    </script>
+    }
+  </script>
+
+  
 
 </body>
 
