@@ -249,3 +249,37 @@ header {
     font-weight: bold;
     cursor: pointer;
 }
+
+
+/* Sección de checkboxes personalizadas dentro del modal */
+
+.modal-content label {
+    font-weight: 500;
+    display: inline-block;
+    margin: 10px 0 5px;
+    color: #1c1c3c;
+}
+
+.modal-content input[type="checkbox"] {
+    margin-right: 8px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+
+/* Contenedor de secciones condicionales (vacaciones/incapacidad) */
+
+.modal-content .seccion-extra {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #f4f7ff;
+    border-left: 4px solid #1c1c3c;
+    border-radius: 8px;
+}
+
+
+/* Inputs dentro de secciones condicionales */
+
+.modal-content .seccion-extra input {
+    margin-top: 10px;
+}

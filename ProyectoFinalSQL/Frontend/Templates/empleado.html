@@ -18,7 +18,7 @@
 
   <div id="side-menu" class="dropdown-menu">
     <ul>
-      <li><a href="/Inicio">Inicio</a></li>
+      <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
       <li><a href="/login">Cerrar sesión</a></li>
     </ul>
   </div>
@@ -38,10 +38,6 @@
     </div>
 
     <div id="resultadoEmpleado" class="resultado-empleado"></div>
-  </div>
-
-  <div class="empleado-grid">
-      <a href="#" class="empleado-card">Cerrar sesión</a>
   </div>
 
   <script>
@@ -74,47 +70,56 @@
           const emp = data[0];
 
         contenedor.innerHTML = `
-  <div class="resultado-empleado">
-    <h3>👤 Datos Personales</h3>
-    <table>
-      <tr><th>Código</th><td>${emp.codigo_empleado}</td></tr>
-      <tr><th>Nombre</th><td>${emp.nombre_empleado}</td></tr>
-      <tr><th>Cargo</th><td>${emp.nombre_cargo}</td></tr>
-      <tr><th>Dependencia</th><td>${emp.nombre_dependencia}</td></tr>
-      <tr><th>Sueldo</th><td>$${emp.sueldo}</td></tr>
-      <tr><th>EPS</th><td>${emp.nombre_eps}</td></tr>
-      <tr><th>ARL</th><td>${emp.nombre_arl}</td></tr>
-      <tr><th>Pensión</th><td>${emp.nombre_pension}</td></tr>
-    </table>
+          <div class="resultado-empleado">
+          <h3>👤 Datos Personales</h3>
+          <table>
+            <tr><th>Código</th><td>${emp.codigo_empleado}</td></tr>
+            <tr><th>Nombre</th><td>${emp.nombre_empleado}</td></tr>
+            <tr><th>Cargo</th><td>${emp.nombre_cargo}</td></tr>
+            <tr><th>Dependencia</th><td>${emp.nombre_dependencia}</td></tr>
+            <tr><th>Sueldo</th><td>$${emp.sueldo}</td></tr>
+            <tr><th>EPS</th><td>${emp.nombre_eps}</td></tr>
+            <tr><th>ARL</th><td>${emp.nombre_arl}</td></tr>
+            <tr><th>Pensión</th><td>${emp.nombre_pension}</td></tr>
+          </table>
 
-    <h3 style="margin-top:30px;">📋 Novedades Laborales</h3>
-    <table>
-      <tr><th>Días trabajados</th><td>${emp.dias_trabajados}</td></tr>
-      <tr><th>Bonificación</th><td>$${emp.bonificacion}</td></tr>
-      <tr><th>Transporte</th><td>$${emp.transporte}</td></tr>
-    </table>
+          <h3 style="margin-top:30px;">📋 Novedades Laborales</h3>
+          <table>
+            <tr><th>Días trabajados</th><td>${emp.dias_trabajados}</td></tr>
+            <tr><th>Bonificación</th><td>$${emp.bonificacion}</td></tr>
+            <tr><th>Transporte</th><td>$${emp.transporte}</td></tr>
+          </table>
 
-    <h3 style="margin-top:30px;">🏖️ Vacaciones</h3>
-    <table>
-      <tr><th>Inicio</th><td>${emp.vac_inicio || "-"}</td></tr>
-      <tr><th>Fin</th><td>${emp.vac_fin || "-"}</td></tr>
-    </table>
+          <h3 style="margin-top:30px;">🏖️ Vacaciones</h3>
+          <table>
+            <tr><th>Inicio</th><td>${emp.vac_inicio || "-"}</td></tr>
+            <tr><th>Fin</th><td>${emp.vac_fin || "-"}</td></tr>
+          </table>
 
-    <h3 style="margin-top:30px;">🩺 Incapacidad</h3>
-    <table>
-      <tr><th>Inicio</th><td>${emp.inc_inicio || "-"}</td></tr>
-      <tr><th>Fin</th><td>${emp.inc_fin || "-"}</td></tr>
-      <tr><th>Tipo</th><td>${emp.tipo_incapacidad || "-"}</td></tr>
-    </table>
-  </div>
-`;
+          <h3 style="margin-top:30px;">🩺 Incapacidad</h3>
+          <table>
+            <tr><th>Inicio</th><td>${emp.inc_inicio || "-"}</td></tr>
+            <tr><th>Fin</th><td>${emp.inc_fin || "-"}</td></tr>
+            <tr><th>Tipo</th><td>${emp.tipo_incapacidad || "-"}</td></tr>
+          </table>
+          <div class="boton-pdf-container">
+           <button class="boton-pdf" onclick="descargarPDF('${emp.codigo_empleado}')">
+              📄 Descargar PDF Nómina
+           </button>
+          </div>
+          <div class="boton-pdf-container">
+             <a href="/login" class="boton-pdf">Cerrar sesión</a>
+          </div>
 
-        });
+        </div>
+      `;
+     });
+   }
+
+    function descargarPDF(codigo) {
+      window.open(`/empleado/nomina_pdf?codigo=${codigo}`, '_blank');
     }
+
   </script>
-
-  
-
 </body>
-
 </html>

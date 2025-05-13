@@ -182,3 +182,26 @@ header {
     text-align: center;
     color: #1c4c1c;
 }
+
+.boton-pdf-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.boton-pdf {
+    background-color: #2a9df4;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.boton-pdf:hover {
+    background-color: #007acc;
+    transform: translateY(-2px);
+}

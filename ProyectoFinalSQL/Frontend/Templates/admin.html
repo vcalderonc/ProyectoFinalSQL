@@ -18,7 +18,7 @@
 
   <div id="side-menu" class="dropdown-menu">
     <ul>
-      <li><a href="/Inicio">Inicio</a></li>
+      <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
       <li><a href="/login">Cerrar sesión</a></li>
     </ul>
   </div>
@@ -30,8 +30,8 @@
         </div>
   
       <div class="admin-grid">
-            <a href="" class="admin-card">Administrar novedad</a>
-        <a href="#" onclick="abrirModal()" class="admin-card">Crear nuevo empleado</a>
+          <a href="#" onclick="abrirModalNovedad()" class="admin-card">Registrar novedad</a>
+          <a href="#" onclick="abrirModal()" class="admin-card">Crear nuevo empleado</a>
         </div>
     <div class="buscar-empleado">
       <h2> Buscar Empleado por Código</h2>
@@ -137,21 +137,40 @@
     
 
     function abrirModal() {
-  document.getElementById("modalCrearEmpleado").style.display = "block";
+    document.getElementById("modalCrearEmpleado").style.display = "block";
     }
 
     function cerrarModal() {
-  document.getElementById("modalCrearEmpleado").style.display = "none";
+    document.getElementById("modalCrearEmpleado").style.display = "none";
     }
 
     window.onclick = function (event) {
-  const modal = document.getElementById("modalCrearEmpleado");
-  if (event.target == modal) {
+    const modal = document.getElementById("modalCrearEmpleado");
+    if (event.target == modal) {
     modal.style.display = "none";
+    }
+    }
+  
+  function abrirModalNovedad() {
+    document.getElementById("modalNovedad").style.display = "block";
   }
+
+  function cerrarModalNovedad() {
+    document.getElementById("modalNovedad").style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    const modalNovedad = document.getElementById("modalNovedad");
+    if (event.target === modalNovedad) {
+      modalNovedad.style.display = "none";
+    }
     }
 
-  </script>
+    function toggleSeccion(id) {
+    const seccion = document.getElementById(id);
+    seccion.style.display = seccion.style.display === "none" ? "block" : "none";
+    }
+</script>
     <!-- MODAL: Crear nuevo empleado -->
 <div id="modalCrearEmpleado" class="modal">
   <div class="modal-content">
@@ -206,6 +225,44 @@
     </form>
   </div>
 </div>
+<!-- MODAL: Registrar Novedad Laboral -->
+<div id="modalNovedad" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModalNovedad()">&times;</span>
+    <h2>Registrar Novedad Laboral</h2>
+<form method="POST" action="/novedad/crear">
+  <label>Empleado</label>
+  <select name="codigo" required>
+    <option disabled selected value="">Seleccione un empleado</option>
+    {% for e in empleados %}
+      <option value="{{ e.codigo_empleado }}">{{ e.nombre_empleado }}</option>
+    {% endfor %}
+  </select><br>
+
+  <input type="number" name="dias" placeholder="Días trabajados"><br>
+  <input type="number" name="bono" placeholder="Bonificación"><br>
+  <input type="number" name="transporte" placeholder="Subsidio transporte"><br>
+
+  <label><input type="checkbox" id="toggleVacaciones" onclick="toggleSeccion('vacaciones')"> Agregar Vacaciones</label><br>
+  <div id="vacaciones" style="display:none;">
+    <input type="date" name="vac_inicio" placeholder="Inicio vacaciones"><br>
+    <input type="date" name="vac_fin" placeholder="Fin vacaciones"><br>
+  </div>
+
+  <label><input type="checkbox" id="toggleIncapacidad" onclick="toggleSeccion('incapacidad')"> Agregar Incapacidad</label><br>
+  <div id="incapacidad" style="display:none;">
+    <input type="date" name="inc_inicio" placeholder="Inicio incapacidad"><br>
+    <input type="date" name="inc_fin" placeholder="Fin incapacidad"><br>
+    <input type="text" name="tipo_incapacidad" placeholder="Tipo de incapacidad"><br>
+  </div><br>
+
+  <button type="submit">Registrar Novedad</button>
+</form>
+
+
+  </div>
+</div>
+
 <!-- MODAL: Editar empleado -->
 <div id="modalEditarEmpleado" class="modal">
   <div class="modal-content">

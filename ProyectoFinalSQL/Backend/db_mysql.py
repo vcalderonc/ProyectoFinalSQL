@@ -11,16 +11,22 @@ def conectar():
         cursorclass=pymysql.cursors.DictCursor
     )
 
+
 def conectar_movies():
     client = MongoClient("mongodb://localhost:27017/")
-    db = client["Movies"]
+    db = client["Entrecol"]
     return db
+
+#def conectar_movies():
+#    client = MongoClient("mongodb://192.168.56.101:27017/")
+#    db = client["facolNoSql"]
+#    return db
 
 
 #peliculas MONGO-------------
 def obtener_peliculas(titulo=None, anio=None):
     db = conectar_movies()
-    coleccion = db["peliculas"]
+    coleccion = db["movies"]
     query = {}
 
     if titulo and anio:
@@ -44,7 +50,7 @@ def obtener_peliculas(titulo=None, anio=None):
 #LIBROS MONGO
 def obtener_libros(titulo=None, isbn=None, fecha=None, editorial=None):
     db = conectar_movies()
-    coleccion = db["libros"]
+    coleccion = db["books"]
     query = {}
 
     if titulo and isinstance(titulo, str) and titulo.strip():

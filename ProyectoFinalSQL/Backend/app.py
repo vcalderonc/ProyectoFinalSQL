@@ -1,4 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, make_response
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import io
+
+
 from db_mysql import (
     conectar,
     obtener_empleados,
@@ -36,6 +41,10 @@ def peliculas():
    # genero = request.args.getlist("genero")
     resultado = obtener_peliculas(titulo, anio)
     return render_template("peliculas.html", peliculas=resultado)
+# ----------------------------
+# 
+# ----------------------------
+
 
 
 # SQL-------------------------
@@ -82,6 +91,62 @@ def login():
 def empleado():
     return render_template("empleado.html")
 
+
+@app.route("/empleado/nomina_pdf")
+def generar_pdf_nomina():
+    codigo = request.args.get("codigo")
+    if not codigo:
+        return "Código de empleado requerido", 400
+
+    datos = obtener_info_completa_empleado(codigo)
+    if not datos:
+        return "Empleado no encontrado", 404
+
+    emp = datos[0]
+    
+    # Crear PDF en memoria
+    buffer = io.BytesIO()
+    p = canvas.Canvas(buffer, pagesize=letter)
+    y = 750
+
+    p.setFont("Helvetica-Bold", 14)
+    p.drawString(200, y, "Nómina del Empleado")
+    y -= 30
+
+    p.setFont("Helvetica", 12)
+    campos = [
+        ("Código", emp["codigo_empleado"]),
+        ("Nombre", emp["nombre_empleado"]),
+        ("Cargo", emp["nombre_cargo"]),
+        ("Dependencia", emp["nombre_dependencia"]),
+        ("Sueldo", f"${emp['sueldo']}"),
+        ("EPS", emp["nombre_eps"]),
+        ("ARL", emp["nombre_arl"]),
+        ("Pensión", emp["nombre_pension"]),
+        ("Días trabajados", emp["dias_trabajados"]),
+        ("Bonificación", f"${emp['bonificacion']}"),
+        ("Transporte", f"${emp['transporte']}"),
+        ("Vacaciones inicio", emp.get("vac_inicio", "-")),
+        ("Vacaciones fin", emp.get("vac_fin", "-")),
+        ("Incapacidad inicio", emp.get("inc_inicio", "-")),
+        ("Incapacidad fin", emp.get("inc_fin", "-")),
+        ("Tipo incapacidad", emp.get("tipo_incapacidad", "-")),
+    ]
+
+    for campo, valor in campos:
+        p.drawString(50, y, f"{campo}: {valor}")
+        y -= 20
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    response = make_response(buffer.read())
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = f"inline; filename=nomina_{codigo}.pdf"
+
+    return response
+
 # ----------------------------
 # Panel de administrador con listas para el modal
 # ----------------------------
@@ -104,7 +169,74 @@ def admin():
         cursor.execute("SELECT id_dependencia, nombre_dependencia FROM Dependencia")
         dependencias = cursor.fetchall()
 
-    return render_template("admin.html", eps=eps, arl=arl, pension=pension, cargos=cargos, dependencias=dependencias)
+        cursor.execute("SELECT codigo_empleado, nombre_empleado FROM Empleado")
+        empleados = cursor.fetchall()  # <-- Agrega esto
+
+    return render_template("admin.html", eps=eps, arl=arl, pension=pension,cargos=cargos, dependencias=dependencias, empleados=empleados)
+# ----------------------------
+# Crear novedad desde modal
+# ----------------------------
+@app.route("/novedad/crear", methods=["POST"])
+def crear_o_actualizar_novedad():
+    datos = request.form
+    codigo = datos["codigo"]
+
+    dias = int(datos.get("dias") or 0)
+    bono = float(datos.get("bono") or 0)
+    transporte = float(datos.get("transporte") or 0)
+
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute("SELECT id_novedad FROM NovedadLaboral WHERE codigo_empleado = %s", (codigo,))
+        novedad = cursor.fetchone()
+
+        if novedad:
+            # Actualizar (sumar) si ya existe novedad
+            id_novedad = novedad["id_novedad"]
+            cursor.execute("""
+                UPDATE NovedadLaboral
+                SET dias_trabajados = dias_trabajados + %s,
+                    bonificacion = bonificacion + %s,
+                    transporte = transporte + %s
+                WHERE id_novedad = %s
+            """, (dias, bono, transporte, id_novedad))
+        else:
+            # Insertar nueva novedad
+            cursor.execute("""
+                INSERT INTO NovedadLaboral (codigo_empleado, dias_trabajados, bonificacion, transporte)
+                VALUES (%s, %s, %s, %s)
+            """, (codigo, dias, bono, transporte))
+            id_novedad = cursor.lastrowid
+
+        # Vacaciones
+        if datos.get("vac_inicio") and datos.get("vac_fin"):
+            cursor.execute("""
+                INSERT INTO Vacacion (id_novedad, fecha_inicio, fecha_fin, dias_vacaciones)
+                VALUES (%s, %s, %s, DATEDIFF(%s, %s) + 1)
+            """, (
+                id_novedad,
+                datos["vac_inicio"],
+                datos["vac_fin"],
+                datos["vac_fin"],
+                datos["vac_inicio"]
+            ))
+
+        # Incapacidad
+        if datos.get("inc_inicio") and datos.get("inc_fin"):
+            cursor.execute("""
+                INSERT INTO Incapacidad (id_novedad, fecha_inicio, fecha_fin, dias_incapacidad, tipo_incapacidad)
+                VALUES (%s, %s, %s, DATEDIFF(%s, %s) + 1, %s)
+            """, (
+                id_novedad,
+                datos["inc_inicio"],
+                datos["inc_fin"],
+                datos["inc_fin"],
+                datos["inc_inicio"],
+                datos.get("tipo_incapacidad")
+            ))
+
+    conexion.commit()
+    return redirect(url_for("admin"))
 
 # ----------------------------
 # Crear empleado desde modal
