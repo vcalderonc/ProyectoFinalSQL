@@ -2,26 +2,10 @@
 from pymongo import MongoClient
 import pymysql
 
-def conectar():
-    return pymysql.connect(
-        host="192.168.1.29",
-        user="root",
-        password="sistemas2024",  # <-- asegúrate de que esto sea correcto
-        database="nomina",
-        cursorclass=pymysql.cursors.DictCursor
-    )
-
-
 def conectar_movies():
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["Entrecol"]
+    client = MongoClient("mongodb://192.168.56.101:27017/")
+    db = client["facolNoSql"]
     return db
-
-#def conectar_movies():
-#    client = MongoClient("mongodb://192.168.56.101:27017/")
-#    db = client["facolNoSql"]
-#    return db
-
 
 #peliculas MONGO-------------
 def obtener_peliculas(titulo=None, anio=None):
