@@ -110,12 +110,23 @@ def obtener_info_completa_empleado(codigo_empleado):
         with conexion.cursor() as cursor:
             cursor.execute("""
                 SELECT 
-                    e.codigo_empleado, e.nombre_empleado, e.sueldo, 
-                    c.nombre_cargo, d.nombre_dependencia,
-                    eps.nombre_eps, arl.nombre_arl, p.nombre_pension,
-                    n.dias_trabajados, n.bonificacion, n.transporte,
-                    v.fecha_inicio AS vac_inicio, v.fecha_fin AS vac_fin,
-                    i.fecha_inicio AS inc_inicio, i.fecha_fin AS inc_fin, i.tipo_incapacidad
+                    e.codigo_empleado, 
+                    e.nombre_empleado, 
+                    e.apellido_empleado,  -- ✅ SE AGREGA ESTA LÍNEA
+                    e.sueldo, 
+                    c.nombre_cargo, 
+                    d.nombre_dependencia,
+                    eps.nombre_eps, 
+                    arl.nombre_arl, 
+                    p.nombre_pension,
+                    n.dias_trabajados, 
+                    n.bonificacion, 
+                    n.transporte,
+                    v.fecha_inicio AS vac_inicio, 
+                    v.fecha_fin AS vac_fin,
+                    i.fecha_inicio AS inc_inicio, 
+                    i.fecha_fin AS inc_fin, 
+                    i.tipo_incapacidad
                 FROM Empleado e
                 LEFT JOIN Cargo c ON e.id_cargo = c.id_cargo
                 LEFT JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
@@ -128,3 +139,4 @@ def obtener_info_completa_empleado(codigo_empleado):
                 WHERE e.codigo_empleado = %s
             """, (codigo_empleado,))
             return cursor.fetchall()
+

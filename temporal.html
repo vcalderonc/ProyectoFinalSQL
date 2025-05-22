@@ -1,0 +1,271 @@
+<!-- Modales -->
+<!-- MODAL: Crear nuevo empleado -->
+<div id="modalCrearEmpleado" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="cerrarModal()">&times;</span>
+        <form method="POST" action="/empleado/crear" class="form">
+            <p id="heading">Crear nuevo empleado</p>
+
+            <input class="input-field" type="text" name="codigo" placeholder="Código" required>
+            <input class="input-field" type="text" name="nombre" placeholder="Nombre" required>
+            <input class="input-field" type="text" name="apellido" placeholder="Apellido" required>
+
+            <select name="dependencia" class="input-field" required>
+          <option disabled selected>Dependencia</option>
+          {% for d in dependencias %}
+          <option value="{{ d.id_dependencia }}">{{ d.nombre_dependencia }}</option>
+          {% endfor %}
+        </select>
+
+            <select name="cargo" class="input-field" required>
+          <option disabled selected>Cargo</option>
+          {% for c in cargos %}
+          <option value="{{ c.id_cargo }}">{{ c.nombre_cargo }}</option>
+          {% endfor %}
+        </select>
+
+            <input class="input-field" type="date" name="fecha" placeholder="Fecha ingreso" required>
+
+            <select name="eps" class="input-field" required>
+          <option disabled selected>EPS</option>
+          {% for e in eps %}
+          <option value="{{ e.id_eps }}">{{ e.nombre_eps }}</option>
+          {% endfor %}
+        </select>
+
+            <select name="arl" class="input-field" required>
+          <option disabled selected>ARL</option>
+          {% for a in arl %}
+          <option value="{{ a.id_arl }}">{{ a.nombre_arl }}</option>
+          {% endfor %}
+        </select>
+
+            <select name="pension" class="input-field" required>
+          <option disabled selected>Pensión</option>
+          {% for p in pension %}
+          <option value="{{ p.id_pension }}">{{ p.nombre_pension }}</option>
+          {% endfor %}
+        </select>
+
+            <input class="input-field" type="text" name="sueldo" placeholder="Sueldo" required>
+
+            <div class="btn">
+                <button class="button1" type="submit">Crear empleado</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: Editar empleado -->
+<div id="modalEditarEmpleado" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="cerrarModalEditar()">&times;</span>
+        <form method="POST" action="/empleado/actualizar" class="form">
+            <p id="heading">Editar empleado</p>
+
+            <input class="input-field" type="hidden" name="codigo" id="editCodigo" required>
+            <input class="input-field" type="text" name="nombre" id="editNombre" placeholder="Nombre" required>
+            <input class="input-field" type="text" name="apellido" id="editApellido" placeholder="Apellido" required>
+
+            <select name="dependencia" class="input-field" id="editDependencia" required>
+          <option disabled selected>Dependencia</option>
+          {% for d in dependencias %}
+          <option value="{{ d.id_dependencia }}">{{ d.nombre_dependencia }}</option>
+          {% endfor %}
+        </select>
+
+            <select name="cargo" class="input-field" id="editCargo" required>
+          <option disabled selected>Cargo</option>
+          {% for c in cargos %}
+          <option value="{{ c.id_cargo }}">{{ c.nombre_cargo }}</option>
+          {% endfor %}
+        </select>
+
+            <input class="input-field" type="date" name="fecha" id="editFecha" required>
+
+            <select name="eps" class="input-field" id="editEps" required>
+          <option disabled selected>EPS</option>
+          {% for e in eps %}
+          <option value="{{ e.id_eps }}">{{ e.nombre_eps }}</option>
+          {% endfor %}
+        </select>
+
+            <select name="arl" class="input-field" id="editArl" required>
+          <option disabled selected>ARL</option>
+          {% for a in arl %}
+          <option value="{{ a.id_arl }}">{{ a.nombre_arl }}</option>
+          {% endfor %}
+        </select>
+
+            <select name="pension" class="input-field" id="editPension" required>
+          <option disabled selected>Pensión</option>
+          {% for p in pension %}
+          <option value="{{ p.id_pension }}">{{ p.nombre_pension }}</option>
+          {% endfor %}
+        </select>
+
+            <input class="input-field" type="text" name="sueldo" id="editSueldo" placeholder="Sueldo" required>
+
+            <div class="btn">
+                <button class="button1" type="submit">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: Registrar novedad laboral -->
+<div id="modalNovedad" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="cerrarModalNovedad()">&times;</span>
+        <form method="POST" action="/novedad/crear" class="form">
+            <p id="heading">Registrar Novedad Laboral</p>
+
+            <select name="codigo" class="input-field" required>
+          <option disabled selected value="">Seleccione un empleado</option>
+          {% for e in empleados %}
+          <option value="{{ e.codigo_empleado }}">{{ e.nombre_empleado }}</option>
+          {% endfor %}
+        </select>
+
+            <input class="input-field" type="number" name="dias" placeholder="Días trabajados">
+            <input class="input-field" type="number" name="bono" placeholder="Bonificación">
+            <input class="input-field" type="number" name="transporte" placeholder="Subsidio transporte">
+
+            <label><input type="checkbox" onclick="toggleSeccion('vacaciones')"> Agregar Vacaciones</label>
+            <div id="vacaciones" class="seccion-extra" style="display:none;">
+                <input class="input-field" type="date" name="vac_inicio">
+                <input class="input-field" type="date" name="vac_fin">
+            </div>
+
+            <label><input type="checkbox" onclick="toggleSeccion('incapacidad')"> Agregar Incapacidad</label>
+            <div id="incapacidad" class="seccion-extra" style="display:none;">
+                <input class="input-field" type="date" name="inc_inicio">
+                <input class="input-field" type="date" name="inc_fin">
+                <input class="input-field" type="text" name="tipo_incapacidad" placeholder="Tipo de incapacidad">
+            </div>
+
+            <div class="btn">
+                <button class="button1" type="submit">Registrar novedad</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Scripts -->
+<script>
+    // Mostrar/ocultar menú lateral
+    function toggleMenu() {
+        const menu = document.getElementById("side-menu");
+        menu.classList.toggle("show");
+    }
+
+    // Abrir y cerrar modal de crear
+    function abrirModal() {
+        document.getElementById("modalCrearEmpleado").style.display = "flex";
+    }
+
+    function cerrarModal() {
+        document.getElementById("modalCrearEmpleado").style.display = "none";
+    }
+
+    // Abrir y cerrar modal de editar
+    function cerrarModalEditar() {
+        document.getElementById("modalEditarEmpleado").style.display = "none";
+    }
+
+    function editarEmpleado(codigo) {
+        fetch(`/empleado/info?codigo=${codigo}`)
+            .then(r => r.json())
+            .then(data => {
+                const emp = data[0];
+                document.getElementById("editCodigo").value = emp.codigo_empleado;
+                document.getElementById("editNombre").value = emp.nombre_empleado;
+                document.getElementById("editApellido").value = emp.apellido_empleado;
+                document.getElementById("editFecha").value = emp.fecha_ingreso;
+                document.getElementById("editDependencia").value = emp.id_dependencia;
+                document.getElementById("editCargo").value = emp.id_cargo;
+                document.getElementById("editEps").value = emp.id_eps;
+                document.getElementById("editArl").value = emp.id_arl;
+                document.getElementById("editPension").value = emp.id_pension;
+                document.getElementById("editSueldo").value = emp.sueldo;
+
+                document.getElementById("modalEditarEmpleado").style.display = "flex";
+            });
+    }
+
+    // Abrir y cerrar modal de novedad
+    function abrirModalNovedad() {
+        document.getElementById("modalNovedad").style.display = "flex";
+    }
+
+    function cerrarModalNovedad() {
+        document.getElementById("modalNovedad").style.display = "none";
+    }
+
+    // Ocultar modales al hacer clic fuera
+    window.onclick = function(event) {
+        const modalCrear = document.getElementById("modalCrearEmpleado");
+        const modalEditar = document.getElementById("modalEditarEmpleado");
+        const modalNovedad = document.getElementById("modalNovedad");
+
+        if (event.target === modalCrear) modalCrear.style.display = "none";
+        if (event.target === modalEditar) modalEditar.style.display = "none";
+        if (event.target === modalNovedad) modalNovedad.style.display = "none";
+    }
+
+    // Mostrar/ocultar secciones de vacaciones e incapacidad
+    function toggleSeccion(id) {
+        const seccion = document.getElementById(id);
+        seccion.style.display = (seccion.style.display === "none" || seccion.style.display === "") ? "block" : "none";
+    }
+
+    // Buscar empleado
+    function buscarEmpleado() {
+        const codigo = document.getElementById("codigoEmpleado").value;
+        fetch(`/empleado/info?codigo=${codigo}`)
+            .then(r => r.json())
+            .then(data => {
+                const contenedor = document.getElementById("resultadoEmpleado");
+                contenedor.innerHTML = "";
+
+                if (!data || data.length === 0) {
+                    contenedor.innerHTML = "<p>No se encontraron datos para ese código.</p>";
+                    return;
+                }
+
+                const emp = data[0];
+                contenedor.innerHTML = `
+            <h3 style="margin-bottom:16px;">👤 Datos Personales</h3>
+            <table style="width:100%; border-collapse:collapse; margin-bottom:20px;">
+              <tr><th style="text-align:left;">Código</th><td>${emp.codigo_empleado}</td></tr>
+              <tr><th>Nombre</th><td>${emp.nombre_empleado}</td></tr>
+              <tr><th>Cargo</th><td>${emp.nombre_cargo}</td></tr>
+              <tr><th>Dependencia</th><td>${emp.nombre_dependencia}</td></tr>
+              <tr><th>Sueldo</th><td>$${emp.sueldo}</td></tr>
+              <tr><th>EPS</th><td>${emp.nombre_eps}</td></tr>
+              <tr><th>ARL</th><td>${emp.nombre_arl}</td></tr>
+              <tr><th>Pensión</th><td>${emp.nombre_pension}</td></tr>
+            </table>
+            <div style="display:flex; gap:10px;">
+              <button onclick="eliminarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#c62828;">Eliminar</button>
+              <button onclick="editarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#1976d2;">Editar</button>
+            </div>
+          `;
+            });
+    }
+
+    // Eliminar empleado
+    function eliminarEmpleado(codigo) {
+        if (confirm("¿Estás seguro de que deseas eliminar este empleado?")) {
+            fetch(`/empleado/eliminar?codigo=${codigo}`, {
+                    method: "DELETE"
+                })
+                .then(r => r.json())
+                .then(data => {
+                    alert(data.mensaje || "Empleado eliminado");
+                    document.getElementById("resultadoEmpleado").innerHTML = "";
+                });
+        }
+    }
+</script>
