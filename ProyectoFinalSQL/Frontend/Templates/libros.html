@@ -5,71 +5,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo de Libros - EntreCOL+</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='libros.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styleinicio.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <header>
-    <div class="logo">EntreCOL+</div>
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-  </header>
+  <div class="main-wrapper">
+    <!-- Header con buscador estilo películas -->
+    <header class="custom-header">
+      <div class="logo">
+        <a href="{{ url_for('inicio') }}">
+          <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
+        </a>
+      </div>
 
-  <div id="side-menu" class="dropdown-menu">
-    <ul>
-      <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-      <li><a href="/peliculas">Películas</a></li>
-      <li><a href="/login">Cerrar sesión</a></li>
-    </ul>
-  </div>
+      <div class="header-actions">
+        <!-- Formulario general con ID para activar submit desde el botón Buscar -->
+        <form method="get" class="search-form expanded" id="form-busqueda">
+          <button type="submit" class="search-toggle">
+            <i class="fas fa-search"></i>
+          </button>
+          <input type="text" name="titulo" class="search-input" placeholder="Título del libro" value="{{ request.args.get('titulo', '') }}">
+          <input type="text" name="isbn" class="search-input" placeholder="ISBN" value="{{ request.args.get('isbn', '') }}">
+          <input type="text" name="editorial" class="search-input" placeholder="Editorial" value="{{ request.args.get('editorial', '') }}">
+          <input type="text" name="fecha" class="search-input" placeholder="Fecha" value="{{ request.args.get('fecha', '') }}">
+        </form>
 
-  <main class="contenido">
-    <section class="banner">
-      <h1>📚 Catálogo de Libros</h1>
-      <p>Filtra por título, ISBN, editorial o fecha de publicación.</p>
-    </section>
+        <!-- Botón que lanza submit al formulario de búsqueda -->
+        <button type="submit" form="form-busqueda" class="login-btn">
+          <i class="fas fa-search"></i> Buscar
+        </button>
 
-    <section class="buscar-libros">
-      <form method="get">
-        <input type="text" name="titulo" placeholder="🔍 Título del libro" value="{{ request.args.get('titulo', '') }}">
-        <input type="text" name="isbn" placeholder="🔢 ISBN" value="{{ request.args.get('isbn', '') }}">
-        <input type="text" name="editorial" placeholder="🏢 Editorial" value="{{ request.args.get('editorial', '') }}">
-        <input type="text" name="fecha" placeholder="📅 Fecha" value="{{ request.args.get('fecha', '') }}">
-        <button type="submit"><i class="fas fa-search"></i> Buscar</button>
-      </form>
-    </section>
-
-    <section class="resultados">
-      <h2>📖 Resultados</h2>
-      <div class="libros-grid">
-        {% for libro in libros %}
-          <div class="libro-card">
-            <h3>{{ libro.title }}</h3>
-            <p><strong>Autor:</strong> {{ libro.authors }}</p>
-            <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
-            <p><strong>Editorial:</strong> {{ libro.publisher }}</p>
-            <p><strong>Fecha publicación:</strong> {{ libro.publication_date }}</p>
-            <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
+        <!-- Menú lateral -->
+        <div class="menu-wrapper">
+          <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
           </div>
-        {% else %}
-          <p>No se encontraron libros.</p>
-        {% endfor %}
+          <div id="side-menu" class="side-menu">
+            <ul>
+              <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+              <li><a href="/peliculas">Películas</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero con video local (mismo estilo de películas) -->
+    <section class="hero-section secondary-hero">
+      <div class="hero-text">
+        <h1>Una colección viva de libros</h1>
+        <p>Descubre títulos seleccionados por su valor narrativo, visual<br> y editorial. Explora la palabra como archivo y legado vivo.</p>
+      </div>
+      <div class="hero-image">
+        <video autoplay muted loop playsinline>
+          <source src="{{ url_for('static', filename='Resources/li.mp4') }}" type="video/mp4">
+          Tu navegador no soporta la reproducción de video.
+        </video>
       </div>
     </section>
-  </main>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("side-menu");
-      menu.style.display = (menu.style.display === "block") ? "none" : "block";
-    }
+    <!-- Resultados -->
+    <section class="resultados">
+      <h1>Resultados</h1>
+      <h3>Tus búsquedas aquí</h3>
+      <div class="peliculas-grid">
+        {% if libros %}
+          {% for libro in libros %}
+            <div class="pelicula-card">
+              <div class="poster-container">
+                <!-- Imagen futura o miniatura -->
+              </div>
+              <h3>{{ libro.title }}</h3>
+              <p><strong>Autor:</strong> {{ libro.authors }}</p>
+              <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
+              <p><strong>Editorial:</strong> {{ libro.publisher }}</p>
+              <p><strong>Fecha publicación:</strong> {{ libro.publication_date }}</p>
+              <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p>No se encontraron libros.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
 
-    window.addEventListener("click", function (e) {
-      const menu = document.getElementById("side-menu");
-      const icon = document.querySelector(".menu-icon");
-      if (!menu.contains(e.target) && !icon.contains(e.target)) {
-        menu.style.display = "none";
-      }
-    });
-  </script>
+  <script src="{{ url_for('static', filename='Inicioscript.js') }}"></script>
 </body>
 </html>
