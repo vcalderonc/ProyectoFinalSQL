@@ -179,6 +179,9 @@ header {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 24px;
+  justify-content: center; /* ✅ Añadido para centrar si hay menos de 5 */
+  max-width: 1600px; /* ✅ Límite del contenedor */
+  margin: 0 auto;
 }
 
 .pelicula-card {
@@ -191,6 +194,9 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: center;
+   max-width: 280px; /* ✅ nuevo */
+  width: 100%;
+
 }
 
 .pelicula-card:hover {
