@@ -1,203 +1,4 @@
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f5f5f5;
-}
-
-header {
-    background-color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    border-bottom: 2px solid #ccc;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    font-family: 'Courier New', cursive;
-}
-
-.logo span {
-    text-decoration: underline dotted red;
-}
-
-.dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    background-color: #fefeff;
-    color: #000;
-    padding: 10px 20px;
-    border-radius: 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 999;
-    min-width: 200px;
-}
-
-.dropdown-menu ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.dropdown-menu li {
-    padding: 10px 0;
-    cursor: pointer;
-    white-space: nowrap;
-}
-
-.dropdown-menu a {
-    text-decoration: none;
-    color: #000;
-    font-weight: 500;
-    display: block;
-}
-
-.dropdown-menu li:hover {
-    text-decoration: underline;
-}
-
-.dropdown-menu li {
-    padding: 10px 0;
-}
-
-.admin-container {
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 20px;
-}
-
-.admin-banner {
-    background-color: #e1e6ff;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 40px;
-}
-
-.admin-banner h1 {
-    margin: 0;
-    font-size: 28px;
-    color: #1c1c3c;
-}
-
-.admin-banner p {
-    margin-top: 10px;
-    font-size: 16px;
-    color: #333;
-}
-
-.admin-grid {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-}
-
-.admin-card {
-    background-color: #1c1c3c;
-    color: white;
-    padding: 12px 20px;
-    text-align: center;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.2s ease;
-    min-width: 180px;
-    max-width: 220px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.admin-card:hover {
-    background-color: #3e3e6d;
-}
-
-.buscar-empleado {
-    margin-top: 40px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    text-align: center;
-}
-
-.buscar-empleado input {
-    padding: 10px;
-    width: 250px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-}
-
-.buscar-empleado button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #1c1c3c;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.buscar-empleado button:hover {
-    background-color: #3e3e6d;
-}
-
-.resultado-empleado {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.resultado-empleado table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.resultado-empleado th,
-.resultado-empleado td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ccc;
-}
-
-.resultado-empleado button {
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-.resultado-empleado button:hover {
-    opacity: 0.9;
-}
-
-.resultado-empleado button:first-of-type {
-    background-color: #d32f2f;
-    /* Eliminar */
-    color: white;
-}
-
-.resultado-empleado button:last-of-type {
-    background-color: #1976d2;
-    /* Editar */
-    color: white;
-}
+/* ----------------- MODAL BASE ----------------- */
 
 .modal {
     display: none;
@@ -207,79 +8,183 @@ header {
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    overflow-y: auto;
+    /* ✅ permite scroll vertical si es necesario */
+    background-color: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(3px);
+    padding: 20px;
+    /* ✅ margen para que no quede pegado al borde */
+    box-sizing: border-box;
+}
+
+.main-wrapper {
+    padding-inline: 6.5vw;
 }
 
 .modal-content {
-    background-color: #fff;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 10px;
-    width: 400px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.modal-content input,
-.modal-content select {
+    background-color: #171717;
+    padding: 2em;
+    border-radius: 24px;
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+    max-width: 480px;
+    margin: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease-in-out;
+    position: relative;
 }
 
-.modal-content button {
-    background-color: #1c1c3c;
+
+/* Animación */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* ----------------- FORMULARIO INTERNO ----------------- */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     color: white;
-    padding: 10px;
-    border: none;
+}
+
+#heading {
+    font-size: 1.6rem;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 1em;
+}
+
+
+/* Campo */
+
+.input-field {
     width: 100%;
-    border-radius: 6px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    background-color: #222;
+    color: #f1f1f1;
+    font-size: 15px;
+    outline: none;
+}
+
+.input-field::placeholder {
+    color: #aaa;
+}
+
+.input-field:focus {
+    border-color: #6a6aff;
+    background-color: #1e1e1e;
+}
+
+
+/* Botón de envío */
+
+.btn {
+    display: flex;
+    justify-content: center;
+}
+
+.button1 {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: #6a6aff;
+    color: white;
+    font-weight: 600;
+    border: none;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.modal-content button:hover {
-    background-color: #3e3e6d;
+.button1:hover {
+    background-color: #5959d6;
 }
 
-.close {
-    float: right;
+
+/* ----------------- CIERRE ----------------- */
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 20px;
     font-size: 24px;
-    font-weight: bold;
+    color: white;
     cursor: pointer;
 }
 
 
-/* Sección de checkboxes personalizadas dentro del modal */
+/* ----------------- CHECKS Y SECCIONES OCULTAS ----------------- */
 
-.modal-content label {
-    font-weight: 500;
-    display: inline-block;
-    margin: 10px 0 5px;
-    color: #1c1c3c;
+.form label {
+    font-size: 14px;
+    color: #ccc;
+    margin-top: 6px;
 }
 
-.modal-content input[type="checkbox"] {
+input[type="checkbox"] {
     margin-right: 8px;
     transform: scale(1.2);
     cursor: pointer;
 }
 
 
-/* Contenedor de secciones condicionales (vacaciones/incapacidad) */
+/* Bloques condicionales: vacaciones/incapacidad */
 
-.modal-content .seccion-extra {
+.seccion-extra {
     margin-top: 10px;
     padding: 15px;
-    background-color: #f4f7ff;
-    border-left: 4px solid #1c1c3c;
-    border-radius: 8px;
+    background-color: #222;
+    border-left: 4px solid #6a6aff;
+    border-radius: 12px;
 }
 
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    background-color: #1e1e1e;
+    color: white;
+    box-sizing: border-box;
+    appearance: none;
+    /* <-- elimina estilo nativo */
+}
 
-/* Inputs dentro de secciones condicionales */
+.input-field::placeholder {
+    color: #888;
+}
 
-.modal-content .seccion-extra input {
-    margin-top: 10px;
+input[type="date"].input-field {
+    color-scheme: dark;
+    /* fuerza modo oscuro */
+}
+
+select.input-field {
+    background-color: #1e1e1e;
+    -webkit-appearance: none;
+    /* Safari */
+    -moz-appearance: none;
+    /* Firefox */
+    appearance: none;
+}
+
+select.input-field {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23ccc" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 40px;
 }
