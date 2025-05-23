@@ -33,7 +33,10 @@
           </form>
         </div>
 
-        <a href="/login" class="login-btn">Cerrar sesión</a>
+        <button type="submit" form="form-busqueda" class="login-btn">
+  <i class="fas fa-search"></i> Buscar
+</button>
+
 
         <div class="menu-wrapper">
           <div class="menu-icon" onclick="toggleMenu()">
@@ -43,30 +46,34 @@
             <ul>
               <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
               <li><a href="/libros">Libros</a></li>
-              <li><a href="/login">Cerrar sesión</a></li>
+              
             </ul>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Hero con video local -->
-    <section class="hero-section secondary-hero">
-      <div class="hero-text">
-        <h1>🎬 Catálogo de Películas</h1>
-        <p>Consulta películas por título o año de lanzamiento.</p>
-      </div>
-      <div class="hero-image">
-        <video autoplay muted loop playsinline>
-          <source src="{{ url_for('static', filename='Resources/peli.mp4') }}" type="video/mp4">
-          Tu navegador no soporta la reproducción de video.
-        </video>
-      </div>
-    </section>
+   <!-- Hero con video local -->
+<section class="hero-section secondary-hero">
+  <div class="hero-text">
+    <h1>Un catálogo donde la<br> narrativa cobra vida</h1>
+    <p>Explora una selección curada de películas y libros<br> que no solo cuentan historias, sino que<br>  abren espacios de reflexión, estética y memoria.</p>
+  </div>
+  <div class="hero-image">
+    <video autoplay muted loop playsinline>
+      <source src="{{ url_for('static', filename='Resources/peli.mp4') }}" type="video/mp4">
+      Tu navegador no soporta la reproducción de video.
+    </video>
+  </div>
+</section>
+
+
+    
 
     <!-- Resultados -->
     <section class="resultados">
-      <h2>🎞️ Resultados</h2>
+      <h1>Resultados</h1>
+      <h3>Tus busquedas aquí</h3>
       <div class="peliculas-grid">
         {% if peliculas %}
           {% for pelicula in peliculas %}

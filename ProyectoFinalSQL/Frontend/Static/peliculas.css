@@ -147,22 +147,28 @@ header {
 /* ---------- CUADRÍCULA DE PELÍCULAS ---------- */
 .peliculas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 32px;
+  justify-items: center;
 }
 
+
 .pelicula-card {
+  width: 100%;
+  max-width: 240px;
   background-color: #111;
   border-radius: 20px;
-  padding: 20px;
+  padding: 24px;
   border: 1px solid #333;
   color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
+
 
 .pelicula-card:hover {
   transform: translateY(-4px);
@@ -170,18 +176,15 @@ header {
 }
 
 .pelicula-card h3 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 16px;
-  font-weight: 700;
-  color: #fff;
+  font-size: 18px;
+  margin-bottom: 12px;
 }
 
 .pelicula-card p {
-  margin: 4px 0;
-  font-size: 14px;
-  color: #ccc;
+  font-size: 15px;
+  line-height: 1.4;
 }
+
 
 .pelicula-card p strong {
   color: #fff;
@@ -219,6 +222,19 @@ header {
   object-fit: cover;
   border-radius: 12px;
 }
+
+@media (max-width: 992px) {
+  .peliculas-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .peliculas-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ------------------ VIDEO BANNER PARA CATÁLOGO DE PELÍCULAS ------------------ */
 .video-banner {
   background-color: #fff;
