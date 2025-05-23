@@ -56,7 +56,8 @@
     <section class="hero-section secondary-hero">
       <div class="hero-text">
         <h1>Una colección viva de libros</h1>
-        <p>Descubre títulos seleccionados por su valor narrativo, visual<br> y editorial. Explora la palabra como archivo y legado vivo.</p>
+        <p>Descubre títulos seleccionados por su valor narrativo, visual y editorial.<br>
+           Explora la palabra como archivo y legado vivo. Filtra por autor, editorial o año para descubrir obras relevantes.</p>
       </div>
       <div class="hero-image">
         <video autoplay muted loop playsinline>
@@ -90,9 +91,62 @@
         {% endif %}
       </div>
     </section>
+
+    <section class="resultados">
+  {% if libros %}
+    <div class="peliculas-grid">
+      {% for libro in libros %}
+        <div class="pelicula-card">
+          <h3>{{ libro.title }}</h3>
+          <p><strong>Autor:</strong> {{ libro.authors }}</p>
+          <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
+          <p><strong>Editorial:</strong> {{ libro.publisher }}</p>
+          <p><strong>Fecha publicación:</strong> {{ libro.publication_date }}</p>
+          <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="error-message">
+      {% if request.args.get('titulo') and request.args.get('isbn') %}
+        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con el ISBN <strong>{{ request.args.get('isbn') }}</strong>.
+      {% elif request.args.get('titulo') %}
+        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>".
+      {% elif request.args.get('isbn') %}
+        No existe ningún libro con el ISBN <strong>{{ request.args.get('isbn') }}</strong>.
+      {% else %}
+        No se encontraron libros que coincidan con su búsqueda.
+      {% endif %}
+    </div>
+  {% endif %}
+</section>
+
   </div>
-<script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
 
+  <!-- Script para menú y búsqueda funcional -->
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("side-menu");
+      menu.classList.toggle("show");
+    }
 
+    document.addEventListener("click", function(e) {
+      const menu = document.getElementById("side-menu");
+      const icon = document.querySelector(".menu-icon");
+      if (!menu.contains(e.target) && !icon.contains(e.target)) {
+        menu.classList.remove("show");
+      }
+    });
+
+    // Reforzar comportamiento del formulario al segundo intento
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("form-busqueda");
+      form.classList.add("expanded");
+
+      form.addEventListener("submit", function () {
+        form.classList.add("expanded"); // evita que colapse
+      });
+    });
+  </script>
 </body>
 </html>
