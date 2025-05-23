@@ -13,10 +13,11 @@ function buscarEmpleado() {
   fetch(`/empleado/info?codigo=${codigo}`)
     .then(res => res.json())
     .then(data => {
-      if (data.length === 0) {
-        contenedor.innerHTML = "<p>No se encontraron datos para ese código.</p>";
-        return;
-      }
+     if (data.length === 0) {
+  showErrorModal("No se encontró ningún empleado con ese código.");
+  return;
+}
+
 
       const emp = data[0];
       contenedor.innerHTML = `
@@ -53,3 +54,21 @@ function buscarEmpleado() {
 function descargarPDF(codigo) {
   window.open(`/empleado/nomina_pdf?codigo=${codigo}`, '_blank');
 }
+function showErrorModal(message) {
+  const modal = document.getElementById("errorModal");
+  const messageContainer = document.getElementById("errorMessage");
+  messageContainer.textContent = message;
+  modal.style.display = "flex";
+}
+
+function closeErrorModal() {
+  document.getElementById("errorModal").style.display = "none";
+}
+
+// Cierra si se hace clic fuera del modal
+window.addEventListener("click", function (event) {
+  const modal = document.getElementById("errorModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
+});

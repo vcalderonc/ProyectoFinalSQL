@@ -75,18 +75,20 @@ function scrollCarouselPeliculas(dir) {
 function openModal() {
   document.getElementById("loginModal").style.display = "flex";
 }
+
 function closeModal() {
   document.getElementById("loginModal").style.display = "none";
 }
 
 
   // Cierra el modal si se hace clic fuera del contenido
-  window.onclick = function(event) {
-    const modal = document.getElementById('loginModal');
-    if (event.target === modal) {
-      modal.style.display = 'none';
-    }
+ window.onclick = function(event) {
+  const modal = document.getElementById("loginModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
   }
+}
+
 
 // barra busqueda inicio
   
@@ -105,4 +107,5 @@ function closeModal() {
     window.location.href = `${ruta}?titulo=${query}`;
   });
 
+ 
 

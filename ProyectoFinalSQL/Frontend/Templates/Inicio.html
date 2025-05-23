@@ -13,7 +13,6 @@
 </head>
 
 <body>
-
   <div class="main-wrapper">
     <header class="custom-header">
       <div class="logo">
@@ -25,16 +24,15 @@
       <div class="header-actions">
         <div class="search-container" id="search-container">
           <form id="form-busqueda" class="search-form">
-  <button type="button" class="search-toggle" onclick="toggleSearchBar()">
-    <i class="fas fa-search"></i>
-  </button>
-  <input type="text" name="q" placeholder="Buscar Entrecol..." class="search-input" required />
-  <select name="tipo" class="search-select">
-    <option value="libros">Libros</option>
-    <option value="peliculas">Películas</option>
-  </select>
-</form>
-
+            <button type="button" class="search-toggle" onclick="toggleSearchBar()">
+              <i class="fas fa-search"></i>
+            </button>
+            <input type="text" name="q" placeholder="Buscar Entrecol..." class="search-input" required />
+            <select name="tipo" class="search-select">
+              <option value="libros">Libros</option>
+              <option value="peliculas">Películas</option>
+            </select>
+          </form>
         </div>
 
         <a href="#" class="login-btn" onclick="openModal()">Iniciar sesión</a>
@@ -58,98 +56,103 @@
       <div class="hero-text">
         <h1>Espacio donde convergen<br>el cine y la literatura.</h1>
         <p>Plataforma que te invita a descubrir<br>curaduría viva de libros y películas</p>
-        <a href="/login" class="start-btn">Empezar ahora</a>
+        <a href="#" class="start-btn" onclick="openModal()">Empezar ahora</a>
       </div>
       <div class="hero-image">
         <img src="https://i.pinimg.com/736x/7f/2f/a9/7f2fa9236c5bcc1106d4f274dda7b2b1.jpg" alt="Obra digital">
       </div>
     </div>
 
- 
-<!-- Carrusel de Libros -->
-<h2 class="carousel-title">Selección de libros</h2>
-<div class="carousel-container books-carousel">
-  <button class="carousel-btn left" onclick="scrollCarouselBooks(-1)">&#10094;</button>
-  <div class="carousel-track" id="carousel-track-books">
-    <img src="https://i.pinimg.com/736x/da/a0/2c/daa02c91032fc514b91fbe0917c13cc0.jpg" alt="Libro 1">
-    <img src="https://i.pinimg.com/736x/07/8f/cd/078fcd074444ec853aa97baece935e3a.jpg" alt="Libro 2">
-    <img src="https://i.pinimg.com/736x/ee/f8/72/eef872b193832127067e40431f0227d3.jpg" alt="Libro 3">
-    <img src="https://i.pinimg.com/736x/23/3e/52/233e52c4b3c1206ad7ccbe065ca03355.jpg" alt="Libro 4">
-    <img src="https://i.pinimg.com/736x/ad/ec/99/adec99372948ff866dee6394a3fac9f6.jpg" alt="Libro 5">
-    <img src="https://i.pinimg.com/736x/99/8a/27/998a27b8d5e238ebc79a11ef3219567c.jpg" alt="Libro 6">
-    <img src="https://i.pinimg.com/736x/2f/c2/25/2fc225a96b74543e14772f2133e12645.jpg" alt="Libro 7">
-    <img src="https://i.pinimg.com/736x/39/1d/5b/391d5b337a5e784e62ba07fb709deec4.jpg" alt="Libro 8">
-    <img src="https://i.pinimg.com/736x/31/25/3a/31253acea755023a231c3461892f6513.jpg" alt="Libro 9">
+    <!-- Carrusel de Libros -->
+    <h2 class="carousel-title">Selección de libros</h2>
+    <div class="carousel-container books-carousel">
+      <button class="carousel-btn left" onclick="scrollCarouselBooks(-1)">&#10094;</button>
+      <div class="carousel-track" id="carousel-track-books">
+        <img src="https://i.pinimg.com/736x/da/a0/2c/daa02c91032fc514b91fbe0917c13cc0.jpg" alt="Libro 1">
+        <img src="https://i.pinimg.com/736x/07/8f/cd/078fcd074444ec853aa97baece935e3a.jpg" alt="Libro 2">
+        <img src="https://i.pinimg.com/736x/ee/f8/72/eef872b193832127067e40431f0227d3.jpg" alt="Libro 3">
+        <img src="https://i.pinimg.com/736x/23/3e/52/233e52c4b3c1206ad7ccbe065ca03355.jpg" alt="Libro 4">
+        <img src="https://i.pinimg.com/736x/ad/ec/99/adec99372948ff866dee6394a3fac9f6.jpg" alt="Libro 5">
+        <img src="https://i.pinimg.com/736x/99/8a/27/998a27b8d5e238ebc79a11ef3219567c.jpg" alt="Libro 6">
+        <img src="https://i.pinimg.com/736x/2f/c2/25/2fc225a96b74543e14772f2133e12645.jpg" alt="Libro 7">
+        <img src="https://i.pinimg.com/736x/39/1d/5b/391d5b337a5e784e62ba07fb709deec4.jpg" alt="Libro 8">
+        <img src="https://i.pinimg.com/736x/31/25/3a/31253acea755023a231c3461892f6513.jpg" alt="Libro 9">
+      </div>
+      <button class="carousel-btn right" onclick="scrollCarouselBooks(1)">&#10095;</button>
+    </div>
+
+    <!-- Carrusel de Películas -->
+    <h2 class="carousel-title">Selección de películas</h2>
+    <div class="carousel-container peliculas-carousel">
+      <button class="carousel-btn left" onclick="scrollCarouselPeliculas(-1)">&#10094;</button>
+      <div class="carousel-track" id="carousel-track-peliculas">
+        <img src="https://i.pinimg.com/736x/5e/eb/83/5eeb83c3bad8c173e7da0d01d64d2a2a.jpg" alt="Película 1">
+        <img src="https://i.pinimg.com/736x/66/0d/fb/660dfb0fe8c2c512a18111c22a9ed8da.jpg" alt="Película 2">
+        <img src="https://i.pinimg.com/736x/3a/01/e3/3a01e37f1234f5d134625b6499dc4155.jpg" alt="Película 3">
+        <img src="https://i.pinimg.com/736x/6f/a6/e6/6fa6e6d8f83de5054e24064d9164226b.jpg" alt="Película 4">
+        <img src="https://i.pinimg.com/736x/03/db/d0/03dbd0063ee43e23e96d3aea6220547a.jpg" alt="Película 5">
+        <img src="https://i.pinimg.com/736x/b5/a7/22/b5a72273c8670c69d259e405f8fbffc5.jpg" alt="Película 6">
+        <img src="https://i.pinimg.com/736x/2f/92/ef/2f92efc4e853a9bc0f98c359dd2df488.jpg" alt="Película 7">
+        <img src="https://i.pinimg.com/736x/03/db/d0/03dbd0063ee43e23e96d3aea6220547a.jpg" alt="Película 8">
+      </div>
+      <button class="carousel-btn right" onclick="scrollCarouselPeliculas(1)">&#10095;</button>
+    </div>
+
+    <!-- Hero segundo -->
+    <div class="hero-section secondary-hero">
+      <div class="hero-text">
+        <h1>Creemos en la libertad de explorar<br> y en el valor de quienes<br> hacen posible cada historia.</h1>
+        <p>Somos un espacio para reconocer el trabajo <br> detrás del arte. Porque conocer el mundo libre <br>comienza por cuidar a quienes lo crean.</p>
+      </div>
+      <div class="hero-image">
+        <img src="https://i.pinimg.com/736x/2c/36/46/2c3646203db0a5b7605495d4f52bc5a3.jpg" alt="Imagen simbólica">
+      </div>
+    </div>
+
+    <!-- Modal Login -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <form class="form" method="POST" action="/login">
+          <p id="heading">Iniciar sesión</p>
+          {% if error %}
+            <p style="color: red; text-align: center; margin-bottom: 1em;">{{ error }}</p>
+          {% endif %}
+          <div class="field">
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643z"/>
+            </svg>
+            <input type="text" name="usuario" placeholder="Usuario" class="input-field" required>
+          </div>
+
+          <div class="field">
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
+            </svg>
+            <input type="password" name="clave" placeholder="Contraseña" class="input-field" required>
+          </div>
+
+          <div class="btn">
+            <button class="button1" type="submit">Entrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-  <button class="carousel-btn right" onclick="scrollCarouselBooks(1)">&#10095;</button>
-</div>
 
-<!-- Carrusel de Películas -->
-<h2 class="carousel-title">Selección de películas</h2>
-<div class="carousel-container peliculas-carousel">
-  <button class="carousel-btn left" onclick="scrollCarouselPeliculas(-1)">&#10094;</button>
-  <div class="carousel-track" id="carousel-track-peliculas">
-    <img src="https://i.pinimg.com/736x/5e/eb/83/5eeb83c3bad8c173e7da0d01d64d2a2a.jpg" alt="Película 1">
-    <img src="https://i.pinimg.com/736x/66/0d/fb/660dfb0fe8c2c512a18111c22a9ed8da.jpg" alt="Película 2">
-    <img src="https://i.pinimg.com/736x/3a/01/e3/3a01e37f1234f5d134625b6499dc4155.jpg" alt="Película 3">
-    <img src="https://i.pinimg.com/736x/6f/a6/e6/6fa6e6d8f83de5054e24064d9164226b.jpg" alt="Película 4">
-    <img src="https://i.pinimg.com/736x/03/db/d0/03dbd0063ee43e23e96d3aea6220547a.jpg" alt="Película 5">
-    <img src="https://i.pinimg.com/736x/b5/a7/22/b5a72273c8670c69d259e405f8fbffc5.jpg" alt="Película 6">
-    <img src="https://i.pinimg.com/736x/2f/92/ef/2f92efc4e853a9bc0f98c359dd2df488.jpg" alt="Película 7">
-    <img src="https://i.pinimg.com/736x/03/db/d0/03dbd0063ee43e23e96d3aea6220547a.jpg" alt="Película 8">
-  </div>
-  <button class="carousel-btn right" onclick="scrollCarouselPeliculas(1)">&#10095;</button>
-</div>
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
 
- <!-- Hero segundo -->
-   <div class="hero-section secondary-hero">
-  <div class="hero-text">
-    <h1>Creemos en la libertad de explorar<br> y en el valor de quienes<br> hacen posible cada historia.</h1>
-    <p>Somos un espacio para reconocer el trabajo <br> detrás del arte. Porque conocer el mundo libre <br>comienza por cuidar a quienes lo crean.</p>
-  </div>
-  <div class="hero-image">
-    <img src="https://i.pinimg.com/736x/2c/36/46/2c3646203db0a5b7605495d4f52bc5a3.jpg" alt="Imagen simbólica">
-  </div>
-</div>
-
-<script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
-
-
-</body>
-
-<!-- Modal Login -->
-<div id="loginModal" class="modal">
-  <div class="modal-content">
-    <span class="close-btn" onclick="closeModal()">&times;</span>
-    
-    <form class="form" method="POST" action="/login">
-      <p id="heading">Iniciar sesión</p>
-
+  <!-- Mostrar el modal solo si hay error -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
       {% if error %}
-        <p style="color: red; text-align: center; margin-bottom: 1em;">{{ error }}</p>
+        const modal = document.getElementById("loginModal");
+        if (modal) {
+          modal.style.display = "flex";
+        }
       {% endif %}
-
-      <div class="field">
-        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643z"/>
-        </svg>
-        <input type="text" name="usuario" placeholder="Usuario" class="input-field" required>
-      </div>
-
-      <div class="field">
-        <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/>
-        </svg>
-        <input type="password" name="clave" placeholder="Contraseña" class="input-field" required>
-      </div>
-
-      <div class="btn">
-        <button class="button1" type="submit">Entrar</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-
+    });
+  </script>
+</body>
 </html>
