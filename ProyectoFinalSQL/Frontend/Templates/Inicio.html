@@ -24,16 +24,17 @@
 
       <div class="header-actions">
         <div class="search-container" id="search-container">
-          <form action="/buscar" method="GET" class="search-form">
-            <button type="button" class="search-toggle" onclick="toggleSearchBar()">
-              <i class="fas fa-search"></i>
-            </button>
-            <input type="text" name="q" placeholder="Buscar Entrecol..." class="search-input" />
-            <select name="tipo" class="search-select">
-              <option value="libros">Libros</option>
-              <option value="peliculas">Películas</option>
-            </select>
-          </form>
+          <form id="form-busqueda" class="search-form">
+  <button type="button" class="search-toggle" onclick="toggleSearchBar()">
+    <i class="fas fa-search"></i>
+  </button>
+  <input type="text" name="q" placeholder="Buscar Entrecol..." class="search-input" required />
+  <select name="tipo" class="search-select">
+    <option value="libros">Libros</option>
+    <option value="peliculas">Películas</option>
+  </select>
+</form>
+
         </div>
 
         <a href="#" class="login-btn" onclick="openModal()">Iniciar sesión</a>
@@ -112,7 +113,7 @@
 </div>
 
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+<script src="{{ url_for('static', filename='Inicioscript.js') }}"></script>
 
 
 </body>
@@ -149,6 +150,7 @@
     </form>
   </div>
 </div>
+
 
 
 </html>

@@ -7,18 +7,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='libros.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
-<body>
 
+<body>
   <header>
-    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
-    <div class="logo"><span>EntreCOL+</span></div>
+    <div class="logo">EntreCOL+</div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
   </header>
 
   <div id="side-menu" class="dropdown-menu">
     <ul>
       <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
       <li><a href="/peliculas">Películas</a></li>
-      <li><a href="/empleados">Nómina</a></li>
       <li><a href="/login">Cerrar sesión</a></li>
     </ul>
   </div>
@@ -31,10 +30,10 @@
 
     <section class="buscar-libros">
       <form method="get">
-        <input type="text" name="titulo" placeholder="🔍 Título del libro">
-        <input type="text" name="isbn" placeholder="🔢 ISBN">
-        <input type="text" name="editorial" placeholder="🏢 Editorial">
-        <input type="text" class="sizeDate" name="fecha" placeholder="📅 Fecha (MM/DD/AAAA)">
+        <input type="text" name="titulo" placeholder="🔍 Título del libro" value="{{ request.args.get('titulo', '') }}">
+        <input type="text" name="isbn" placeholder="🔢 ISBN" value="{{ request.args.get('isbn', '') }}">
+        <input type="text" name="editorial" placeholder="🏢 Editorial" value="{{ request.args.get('editorial', '') }}">
+        <input type="text" name="fecha" placeholder="📅 Fecha" value="{{ request.args.get('fecha', '') }}">
         <button type="submit"><i class="fas fa-search"></i> Buscar</button>
       </form>
     </section>
@@ -72,6 +71,5 @@
       }
     });
   </script>
-
 </body>
 </html>

@@ -1,109 +1,202 @@
+/* ------------------ ESTILO BASE ------------------ */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background-color: #f7f9fc;
-    color: #333;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: 0;
+  background-color: #000;
+  color: #fff;
 }
 
 header {
-    background-color: #2a2a72;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background-color: #000;
+  color: #fff;
+  padding: 24px 6.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
-    font-size: 1.5em;
-    font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .menu-icon {
-    font-size: 24px;
-    cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
 }
 
 .dropdown-menu {
-    display: none;
-    background-color: #343a40;
-    color: white;
-    padding: 10px;
+  display: none;
+  background-color: #111;
+  color: white;
+  padding: 10px 20px;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  border-radius: 12px;
+  z-index: 100;
 }
 
 .dropdown-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .dropdown-menu ul li {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .dropdown-menu ul li a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
 }
 
+.dropdown-menu ul li:hover {
+  background-color: #222;
+}
+
+/* ------------------ BANNER ENCABEZADO ------------------ */
 .banner {
-    background-color: #e3e6ff;
-    padding: 30px 20px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
+  background-color: #e6defc;
+  color: #000;
+  border-radius: 32px;
+  max-width: 95%;
+  margin: 40px auto;
+  padding: 40px;
+  text-align: center;
 }
 
+.banner h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.banner p {
+  font-size: 16px;
+  color: #444;
+}
+
+/* ------------------ BÚSQUEDA ------------------ */
 .buscar-libros {
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+.buscar-libros form {
+  display: flex;
+  gap: 12px;
+  background-color: #111;
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  flex-wrap: wrap;
+  max-width: 90%;
 }
 
 .buscar-libros input {
-    padding: 10px;
-    margin: 5px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
+  padding: 8px;
+  width: 160px;
 }
 
 .buscar-libros button {
-    padding: 10px 15px;
-    background-color: #2a2a72;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+  background-color: #6a6aff;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
+.buscar-libros button:hover {
+  background-color: #4d4dd6;
+}
+
+/* ------------------ RESULTADOS ------------------ */
 .resultados {
-    padding: 20px;
+  padding: 40px 6.5vw;
+  margin-top: 40px;
+}
+
+.resultados h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .libros-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
 }
 
 .libro-card {
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
+  background-color: #111;
+  border: 1px solid #333;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .libro-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px #444;
 }
 
 .libro-card h3 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #2a2a72;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
 }
 
 .libro-card p {
-    margin: 5px 0;
+  margin: 4px 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.libro-card p strong {
+  color: #fff;
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 768px) {
+  .buscar-libros form {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 16px;
+  }
+
+  .buscar-libros input,
+  .buscar-libros button {
+    width: 100%;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

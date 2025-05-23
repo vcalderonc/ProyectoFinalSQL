@@ -87,3 +87,22 @@ function closeModal() {
       modal.style.display = 'none';
     }
   }
+
+// barra busqueda inicio
+  
+  document.getElementById("form-busqueda").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const q = document.querySelector(".search-input").value.trim();
+    const tipo = document.querySelector(".search-select").value;
+
+    if (!q) return; // No hacer nada si el campo está vacío
+
+    const ruta = tipo === "peliculas" ? "/peliculas" : "/libros";
+    const query = encodeURIComponent(q);
+
+    // Redirigir con parámetro GET
+    window.location.href = `${ruta}?titulo=${query}`;
+  });
+
+

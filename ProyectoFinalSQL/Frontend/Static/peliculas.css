@@ -1,93 +1,288 @@
+/* ------------------ ESTILO BASE ------------------ */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    margin: 0;
-    background-color: #f8f9fa;
-    color: #333;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: 0;
+  background-color: #000;
+  color: #fff;
 }
 
+/* ------------------ HEADER ------------------ */
 header {
-    background-color: #2a2a72;
-    color: #fff;
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  background-color: #000;
+  color: #fff;
+  padding: 24px 6.5vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .logo {
-    font-size: 1.5em;
-    font-weight: bold;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 
 .menu-icon {
-    font-size: 24px;
-    cursor: pointer;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
 }
 
+/* ------------------ MENÚ DESPLEGABLE ------------------ */
 .dropdown-menu {
-    display: none;
-    background-color: #343a40;
-    color: white;
-    padding: 10px;
+  display: none;
+  background-color: #111;
+  color: white;
+  padding: 10px 20px;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  border-radius: 12px;
+  z-index: 100;
 }
 
 .dropdown-menu ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .dropdown-menu ul li {
-    padding: 10px 0;
+  padding: 10px 0;
 }
 
 .dropdown-menu ul li a {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
 }
 
+.dropdown-menu ul li:hover {
+  background-color: #222;
+}
+
+/* ------------------ BANNER ENCABEZADO ------------------ */
 .banner {
-    background-color: #e0e0ff;
-    padding: 20px;
-    text-align: center;
+  background-color: #e6defc;
+  color: #000;
+  border-radius: 32px;
+  max-width: 95%;
+  margin: 40px auto;
+  padding: 40px;
+  text-align: center;
 }
 
+.banner h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.banner p {
+  font-size: 16px;
+  color: #444;
+}
+
+/* ------------------ BÚSQUEDA ------------------ */
 .buscar-peliculas {
-    text-align: center;
-    margin: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
 }
 
-.buscar-peliculas input {
-    padding: 10px;
-    margin: 0 5px;
-    width: 200px;
+.buscar-formulario {
+  display: flex;
+  gap: 12px;
+  background-color: #111;
+  border: 1px solid #fff;
+  border-radius: 9999px;
+  padding: 8px 16px;
+  max-width: 90%;
+  flex-wrap: wrap;
 }
 
-.buscar-peliculas button {
-    padding: 10px 15px;
-    background-color: #2a2a72;
-    color: white;
-    border: none;
-    cursor: pointer;
+.buscar-formulario input {
+  background: transparent;
+  border: none;
+  color: #ccc;
+  font-size: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none;
+  padding: 8px;
+  width: 180px;
 }
 
+.buscar-formulario button {
+  background-color: #6a6aff;
+  color: white;
+  border: none;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buscar-formulario button:hover {
+  background-color: #4d4dd6;
+}
+
+/* ------------------ RESULTADOS ------------------ */
 .resultados {
-    padding: 20px;
+  padding: 40px 6.5vw;
+  margin-top: 40px;
 }
 
+.resultados h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------- CUADRÍCULA DE PELÍCULAS ---------- */
 .peliculas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
 }
 
 .pelicula-card {
-    background-color: white;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  background-color: #111;
+  border-radius: 20px;
+  padding: 20px;
+  border: 1px solid #333;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.pelicula-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 0 1px #444;
 }
 
 .pelicula-card h3 {
-    margin-top: 0;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
 }
+
+.pelicula-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.pelicula-card p strong {
+  color: #fff;
+}
+
+/* ------------------ RESPONSIVE ------------------ */
+@media (max-width: 768px) {
+  .buscar-formulario {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 16px;
+  }
+
+  .buscar-formulario input,
+  .buscar-formulario button {
+    width: 100%;
+  }
+
+  header {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+.poster-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.poster-img {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+/* ------------------ VIDEO BANNER PARA CATÁLOGO DE PELÍCULAS ------------------ */
+.video-banner {
+  background-color: #fff;
+  color: #000;
+  border-radius: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  overflow: hidden;
+  max-width: 95%;
+  margin: 40px auto;
+  height: 320px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.video-banner .banner-text {
+  flex: 1;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.video-banner .banner-text h1 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #000;
+}
+
+.video-banner .banner-text p {
+  font-size: 15px;
+  color: #444;
+}
+
+.video-banner .video-frame {
+  flex: 1;
+  min-width: 300px;
+  max-width: 640px;
+  height: 100%;
+}
+
+.video-banner .video-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  object-fit: cover;
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .video-banner {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .video-banner .banner-text {
+    padding: 30px;
+  }
+
+  .video-banner .video-frame {
+    height: 200px;
+  }
+}
+

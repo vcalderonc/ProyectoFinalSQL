@@ -56,6 +56,8 @@ usuarios = {
     "admin": {"clave": "admin123", "rol": "admin"},
     "empleado": {"clave": "emp123", "rol": "empleado"}
 }
+ 
+
 
 # ----------------------------
 # Página principal
@@ -80,9 +82,9 @@ def login():
             elif rol == "empleado":
                 return redirect(url_for("empleado"))
         else:
-            return render_template("login.html", error="Usuario o contraseña incorrectos.")
+            return render_template("inicio.html", error="Usuario o contraseña incorrectos.")
 
-    return render_template("login.html")
+    return render_template("inicio.html")
 
 # ----------------------------
 # Panel de empleado
@@ -351,6 +353,12 @@ def info_empleado():
 @app.route("/index")
 def index():
     return render_template("index.html")
+
+
+
+# ----------------------------
+# Manejo de excepciones
+# ---
 
 # ----------------------------
 # Ejecutar servidor
