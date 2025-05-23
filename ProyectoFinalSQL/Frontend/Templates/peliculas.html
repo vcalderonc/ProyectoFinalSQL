@@ -12,7 +12,6 @@
 
 <body>
   <div class="main-wrapper">
-    <!-- Header con logo + buscador estilo inicio -->
     <header class="custom-header">
       <div class="logo">
         <a href="{{ url_for('inicio') }}">
@@ -21,22 +20,17 @@
       </div>
 
       <div class="header-actions">
-        <!-- Barra de búsqueda estilo inicio -->
-        <div class="search-container">
-          <form method="get" class="search-form expanded">
-            <button type="submit" class="search-toggle">
-              <i class="fas fa-search"></i>
-            </button>
-            <input type="text" name="titulo" class="search-input" placeholder="Buscar películas..." value="{{ request.args.get('titulo', '') }}">
-            <input type="hidden" name="tipo" value="peliculas">
-            <input type="text" name="anio" class="search-input" placeholder="Año" value="{{ request.args.get('anio', '') }}">
-          </form>
-        </div>
+        <form method="get" class="search-form expanded" id="form-busqueda">
+          <button type="submit" class="search-toggle">
+            <i class="fas fa-search"></i>
+          </button>
+          <input type="text" name="titulo" class="search-input" placeholder="Buscar películas..." value="{{ request.args.get('titulo', '') }}">
+          <input type="text" name="anio" class="search-input" placeholder="Año" value="{{ request.args.get('anio', '') }}">
+        </form>
 
         <button type="submit" form="form-busqueda" class="login-btn">
-  <i class="fas fa-search"></i> Buscar
-</button>
-
+          <i class="fas fa-search"></i> Buscar
+        </button>
 
         <div class="menu-wrapper">
           <div class="menu-icon" onclick="toggleMenu()">
@@ -46,36 +40,30 @@
             <ul>
               <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
               <li><a href="/libros">Libros</a></li>
-              
             </ul>
           </div>
         </div>
       </div>
     </header>
 
-   <!-- Hero con video local -->
-<section class="hero-section secondary-hero">
-  <div class="hero-text">
-    <h1>Un catálogo donde la<br> narrativa cobra vida</h1>
-    <p>Explora una selección curada de películas y libros<br> que no solo cuentan historias, sino que<br>  abren espacios de reflexión, estética y memoria.</p>
-  </div>
-  <div class="hero-image">
-    <video autoplay muted loop playsinline>
-      <source src="{{ url_for('static', filename='Resources/peli.mp4') }}" type="video/mp4">
-      Tu navegador no soporta la reproducción de video.
-    </video>
-  </div>
-</section>
+    <section class="hero-section secondary-hero">
+      <div class="hero-text">
+        <h1>Un catálogo donde la<br> narrativa cobra vida</h1>
+        <p>Explora una selección curada de películas y libros<br> que no solo cuentan historias, sino que<br> abren espacios de reflexión, estética y memoria.</p>
+      </div>
+      <div class="hero-image">
+        <video autoplay muted loop playsinline>
+          <source src="{{ url_for('static', filename='Resources/peli.mp4') }}" type="video/mp4">
+          Tu navegador no soporta la reproducción de video.
+        </video>
+      </div>
+    </section>
 
-
-    
-
-    <!-- Resultados -->
     <section class="resultados">
       <h1>Resultados</h1>
-      <h3>Tus busquedas aquí</h3>
-      <div class="peliculas-grid">
-        {% if peliculas %}
+      <h3>Tus búsquedas aquí</h3>
+      {% if peliculas %}
+        <div class="peliculas-grid">
           {% for pelicula in peliculas %}
             <div class="pelicula-card">
               <div class="poster-container">
@@ -88,14 +76,45 @@
               {% endif %}
             </div>
           {% endfor %}
-        {% else %}
-          <p>No se encontraron películas.</p>
-        {% endif %}
-      </div>
+        </div>
+      {% else %}
+        <div class="error-message" style="margin-top: 0;">
+          {% if request.args.get('titulo') and request.args.get('anio') %}
+            No se encontró ninguna película titulada "<strong>{{ request.args.get('titulo') }}</strong>" del año <strong>{{ request.args.get('anio') }}</strong>.
+          {% elif request.args.get('titulo') %}
+            No se encontró ninguna película titulada "<strong>{{ request.args.get('titulo') }}</strong>".
+          {% elif request.args.get('anio') %}
+            No se encontró ninguna película del año <strong>{{ request.args.get('anio') }}</strong>.
+          {% else %}
+            No se encontraron películas que coincidan con su búsqueda.
+          {% endif %}
+        </div>
+      {% endif %}
     </section>
   </div>
 
-<script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("side-menu");
+      menu.classList.toggle("show");
+    }
 
+    document.addEventListener("click", function(e) {
+      const menu = document.getElementById("side-menu");
+      const icon = document.querySelector(".menu-icon");
+      if (!menu.contains(e.target) && !icon.contains(e.target)) {
+        menu.classList.remove("show");
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("form-busqueda");
+      form.classList.add("expanded");
+
+      form.addEventListener("submit", function () {
+        form.classList.add("expanded");
+      });
+    });
+  </script>
 </body>
 </html>

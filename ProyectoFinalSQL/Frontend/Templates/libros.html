@@ -92,7 +92,7 @@
       </div>
     </section>
 
-    <section class="resultados">
+
   {% if libros %}
     <div class="peliculas-grid">
       {% for libro in libros %}
@@ -107,19 +107,28 @@
       {% endfor %}
     </div>
   {% else %}
-    <div class="error-message">
-      {% if request.args.get('titulo') and request.args.get('isbn') %}
-        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con el ISBN <strong>{{ request.args.get('isbn') }}</strong>.
+    <div class="error-message" style="margin-top: 0;">
+      {% if request.args.get('titulo') and request.args.get('isbn') and request.args.get('icbn') %}
+        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con ISBN <strong>{{ request.args.get('isbn') }}</strong> y ICBN <strong>{{ request.args.get('icbn') }}</strong>.
+      {% elif request.args.get('titulo') and request.args.get('isbn') %}
+        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con ISBN <strong>{{ request.args.get('isbn') }}</strong>.
+      {% elif request.args.get('titulo') and request.args.get('icbn') %}
+        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con ICBN <strong>{{ request.args.get('icbn') }}</strong>.
+      {% elif request.args.get('isbn') and request.args.get('icbn') %}
+        No existe ningún libro con ISBN <strong>{{ request.args.get('isbn') }}</strong> y ICBN <strong>{{ request.args.get('icbn') }}</strong>.
       {% elif request.args.get('titulo') %}
         No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>".
       {% elif request.args.get('isbn') %}
-        No existe ningún libro con el ISBN <strong>{{ request.args.get('isbn') }}</strong>.
+        No existe ningún libro con ISBN <strong>{{ request.args.get('isbn') }}</strong>.
+      {% elif request.args.get('icbn') %}
+        No existe ningún libro con ICBN <strong>{{ request.args.get('icbn') }}</strong>.
       {% else %}
         No se encontraron libros que coincidan con su búsqueda.
       {% endif %}
     </div>
   {% endif %}
 </section>
+
 
   </div>
 

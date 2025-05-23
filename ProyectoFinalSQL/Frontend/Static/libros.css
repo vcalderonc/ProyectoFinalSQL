@@ -163,25 +163,45 @@ header {
   margin-top: 40px;
 }
 
-.resultados h2,
-.resultados h1,
-.resultados h3 {
-  font-size: 20px;
+.resultados h1 {
+  font-size: 24px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 4px; /* reducido */
   color: white;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
+.resultados h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #aaa;
+}
+
+/* Mensaje de error bajo h3 */
+.resultados .error-message {
+  background-color: #ffdddd;
+  color: #900;
+  padding: 10px 16px;
+  border-left: 4px solid #c00;
+  border-radius: 8px;
+  margin-top: 0; /* sin espacio extra */
+  margin-bottom: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ------------------ RETÍCULA ------------------ */
 .peliculas-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
-  justify-content: center; /* ✅ Añadido para centrar si hay menos de 5 */
-  max-width: 1600px; /* ✅ Límite del contenedor */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 32px;
+  justify-items: center;
+  max-width: 1600px;
   margin: 0 auto;
+  padding: 0;
 }
 
 .pelicula-card {
@@ -194,9 +214,8 @@ header {
   display: flex;
   flex-direction: column;
   justify-content: center;
-   max-width: 280px; /* ✅ nuevo */
   width: 100%;
-
+  max-width: 280px;
 }
 
 .pelicula-card:hover {
@@ -223,23 +242,8 @@ header {
 
 /* ------------------ RESPONSIVE ------------------ */
 @media (max-width: 768px) {
-  .buscar-libros form {
-    flex-direction: column;
-    align-items: stretch;
-    border-radius: 16px;
-  }
-
-  .buscar-libros input,
-  .buscar-libros button {
-    width: 100%;
-  }
-
-  header {
-    flex-direction: column;
-    gap: 12px;
-  }
-
   .peliculas-grid {
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
   }
 }
