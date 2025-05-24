@@ -32,25 +32,47 @@ def obtener_peliculas(titulo=None, anio=None):
     return list(coleccion.find(query, {"_id": 0}))
 
 #LIBROS MONGO
-def obtener_libros(titulo=None, isbn=None, fecha=None, editorial=None):
+def obtener_libros(titulo=None, isbn=None, editorial=None, autor=None, idioma=None, rating_min=None):
     db = conectar_movies()
     coleccion = db["books"]
     query = {}
 
-    if titulo and isinstance(titulo, str) and titulo.strip():
+    if titulo and titulo.strip():
         query["title"] = {"$regex": titulo.strip(), "$options": "i"}
 
-    if isbn and isinstance(isbn, str) and isbn.strip():
+    if isbn and isbn.strip():
         query["isbn"] = isbn.strip()
 
-    if fecha and isinstance(fecha, str) and fecha.strip():
-        query["publication_date"] = fecha.strip()  # formato: "9/16/2006"
-
-    if editorial and isinstance(editorial, str) and editorial.strip():
+    if editorial and editorial.strip():
         query["publisher"] = {"$regex": editorial.strip(), "$options": "i"}
 
-    return list(coleccion.find(query, {"_id": 0}))
+    if autor and autor.strip():
+        query["authors"] = {"$regex": autor.strip(), "$options": "i"}
 
+    if idioma and idioma.strip():
+        query["language_code"] = idioma.strip()
+
+    print(">>> QUERY FINAL (sin rating):", query)
+    resultados = list(coleccion.find(query, {"_id": 0}))
+
+    # Filtro de rating aplicado después de consultar Mongo
+    if rating_min and rating_min.strip():
+        try:
+            rating_val = float(rating_min.strip())
+            resultados_filtrados = []
+            for libro in resultados:
+                rating = libro.get("average_rating")
+                try:
+                    if rating is not None and float(rating) >= rating_val:
+                        resultados_filtrados.append(libro)
+                except ValueError:
+                    continue  # ignora si el rating no es convertible
+            resultados = resultados_filtrados
+        except ValueError:
+            print("⚠️ rating_min no es un número válido")
+
+
+    return resultados
 
 
 

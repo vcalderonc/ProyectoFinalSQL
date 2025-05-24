@@ -9,9 +9,18 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
+  <!-- Modal de error -->
+  <div id="modalError" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="cerrarModalError()">&times;</span>
+      <p id="mensajeError">Mensaje de error</p>
+    </div>
+  </div>
+
   <div class="main-wrapper">
-    <!-- Header con logo y título -->
+    <!-- Header -->
     <header class="custom-header" style="display: flex; align-items: center; justify-content: space-between; padding-inline: 6.5vw;">
       <div style="display: flex; align-items: center; gap: 20px;">
         <div class="logo">
@@ -34,7 +43,7 @@
       </div>
     </header>
 
-    <!-- Hero con video -->
+    <!-- Hero -->
     <section class="hero-section secondary-hero">
       <div class="hero-text">
         <h1>Una colección viva de libros</h1>
@@ -49,47 +58,64 @@
       </div>
     </section>
 
-    <!-- Filtros básicos -->
-    <section style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
-      <div class="filtro-box" style="min-width: 400px;">
-        <h1>Busca por título</h1>
-        <form method="get" action="#resultados" onsubmit="return validarTitulo(this)">
-          <input type="text" class="input-field" name="titulo" placeholder="Título del libro">
-          <button type="submit" class="button1">Buscar</button>
-        </form>
-      </div>
+<!-- Filtros básicos unificados -->
+<section class="filtros-basicos">
+  <div class="filtro-box">
+    <h1>Busca por título</h1>
+    <form method="get" action="#resultados" onsubmit="return validarTitulo(this)">
+      <input type="text" class="input-field" name="titulo" placeholder="Título del libro">
+      <button type="submit" class="button1">Buscar</button>
+    </form>
+  </div>
 
-      <div class="filtro-box" style="min-width: 400px;">
-        <h1>Busca por ISBN</h1>
-        <form method="get" action="#resultados">
-          <input type="text" class="input-field" name="isbn" placeholder="ISBN">
-          <button type="submit" class="button1">Buscar</button>
-        </form>
-      </div>
-    </section>
+  <div class="filtro-box">
+    <h1>Busca por ISBN</h1>
+    <form method="get" action="#resultados" onsubmit="return validarISBNBasico(this)">
+      <input type="text" class="input-field" name="isbn" placeholder="ISBN">
+      <button type="submit" class="button1">Buscar</button>
+    </form>
+  </div>
 
-     <div class="filtro-box" style="min-width: 400px;">
-        <h1>Busca por editorial</h1>
-        <form method="get" action="#resultados">
-          <input type="text" class="input-field" name="editorial" placeholder="Editorial">
-          <button type="submit" class="button1">Buscar</button>
-        </form>
-      </div>
-    </section>
+  <div class="filtro-box">
+    <h1>Busca por editorial</h1>
+    <form method="get" action="#resultados" onsubmit="return validarEditorialBasico(this)">
+      <input type="text" class="input-field" name="editorial" placeholder="Editorial">
+      <button type="submit" class="button1">Buscar</button>
+    </form>
+  </div>
+</section>
 
-    <!-- Filtros avanzados -->
-    <section class="filtro-box" style="max-width: none; width: 90%;">
-      <h2>Filtros Avanzados</h2>
-      <form method="get" action="#resultados" onsubmit="return validarAvanzado(this)">
-        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-          <input type="text" name="titulo" class="input-field" placeholder="Título">
-          <input type="text" name="isbn" class="input-field" placeholder="ISBN">
-          <input type="text" name="editorial" class="input-field" placeholder="Editorial">
-          <input type="text" name="fecha" class="input-field" placeholder="Fecha de publicación">
-        </div>
-        <button type="submit" class="button1" style="margin-top: 16px;">Filtrar</button>
-      </form>
-    </section>
+
+    <!-- Filtros avanzados mejorados -->
+<section class="filtro-box" style="max-width: none; width: 90%;">
+  <h2>Filtros Avanzados</h2>
+  <p style="text-align:center; color:#aaa; font-size:14px;">
+    Puedes combinar múltiples criterios. Encuentra aquí lo que buscas
+  </p>
+  <form method="get" action="#resultados" onsubmit="return validarAvanzado(this)">
+    <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+      <input type="text" name="titulo" class="input-field" placeholder="Título">
+      <input type="text" name="autor" class="input-field" placeholder="Autor">
+      <input type="text" name="editorial" class="input-field" placeholder="Editorial">
+      <select name="idioma" class="input-field">
+  <option value="">Cualquier idioma</option>
+  <option value="eng" {% if request.args.get('idioma') == 'eng' %}selected{% endif %}>Inglés</option>
+  <option value="en-GB" {% if request.args.get('idioma') == 'en-GB' %}selected{% endif %}>Inglés (UK)</option>
+  <option value="rus" {% if request.args.get('idioma') == 'rus' %}selected{% endif %}>Ruso</option>
+  <option value="lat" {% if request.args.get('idioma') == 'lat' %}selected{% endif %}>Latín</option>
+  <option value="por" {% if request.args.get('idioma') == 'por' %}selected{% endif %}>Portugués</option>
+  <option value="grc" {% if request.args.get('idioma') == 'grc' %}selected{% endif %}>Griego clásico</option>
+  <option value="nor" {% if request.args.get('idioma') == 'nor' %}selected{% endif %}>Noruego</option>
+  <option value="jpn" {% if request.args.get('idioma') == 'jpn' %}selected{% endif %}>Japonés</option>
+</select>
+
+
+<input type="number" name="rating_min" class="input-field" step="0.1" min="0" max="5" placeholder="Rating mínimo (ej. 4.0)">
+    </div>
+    <button type="submit" class="button1" style="margin-top: 16px;">Filtrar</button>
+  </form>
+</section>
+
 
     <!-- Resultados -->
     <section class="resultados" id="resultados">
@@ -103,8 +129,8 @@
               <p><strong>Autor:</strong> {{ libro.authors }}</p>
               <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
               <p><strong>Editorial:</strong> {{ libro.publisher }}</p>
-              <p><strong>Fecha publicación:</strong> {{ libro.publication_date }}</p>
               <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
+              <p><strong>Idioma:</strong> {{ libro.language_code or "No disponible" }}</p>
             </div>
           {% endfor %}
         </div>
@@ -118,43 +144,24 @@
         </div>
       {% endif %}
     </section>
-     <!-- Filtros avanzados -->
-    <section class="filtro-box" style="max-width: none; width: 90%;">
-      <h2>Filtros Avanzados</h2>
-      <form method="get" action="#resultados">
-        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
-          <input type="text" name="titulo" class="input-field" placeholder="Título">
-          <input type="text" name="autor" class="input-field" placeholder="Autor">
-          <input type="text" name="editorial" class="input-field" placeholder="Editorial">
-          <input type="text" name="fecha" class="input-field" placeholder="Fecha publicación (MM/DD/AAAA)">
-        </div>
-        <button type="submit" class="button1" style="margin-top: 16px;">Filtrar</button>
-      </form>
-    </section>
-
-    <!-- Resultados -->
-    <section class="resultados" id="resultados">
-      <h1>Resultados</h1>
-      <h3>Tus búsquedas aquí</h3>
-      <div class="peliculas-grid">
-        <div class="pelicula-card">
-          <h3>Harry Potter (J.K. Rowling / Mary GrandPré)</h3>
-          <p><strong>Autor:</strong> J.K. Rowling / Mary GrandPré</p>
-          <p><strong>ISBN:</strong> 0439358078</p>
-          <p><strong>Editorial:</strong> Scholastic Inc.</p>
-          <p><strong>Fecha publicación:</strong> 01/09/2004</p>
-          <p><strong>Rating:</strong> 4.49</p>
-        </div>
-      </div>
-    </section>
   </div>
 
-  </div>
-
+  <!-- Scripts -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById("side-menu");
       menu.classList.toggle("show");
+    }
+
+    function cerrarModalError() {
+      document.getElementById("modalError").style.display = "none";
+    }
+
+    function mostrarModalError(texto) {
+      const modal = document.getElementById("modalError");
+      const mensaje = document.getElementById("mensajeError");
+      mensaje.textContent = texto;
+      modal.style.display = "flex";
     }
 
     function validarTitulo(form) {
@@ -162,25 +169,98 @@
       const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s\d]+$/;
 
       if (!titulo || /^\d/.test(titulo) || !regex.test(titulo)) {
-        alert("El título no puede comenzar con número ni contener caracteres especiales.");
+        mostrarModalError("⚠️ El título no puede comenzar con número ni contener caracteres especiales.");
         return false;
       }
       return true;
     }
+
+    function validarEditorial(valor) {
+  const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
+  if (!regex.test(valor)) {
+    mostrarModalError("⚠️ La editorial no debe contener números ni caracteres especiales.");
+    return false;
+  }
+  return true;
+}
+
+function validarISBN(valor) {
+  const regex = /^\d+$/;
+  if (!regex.test(valor)) {
+    mostrarModalError("⚠️ El ISBN solo debe contener números.");
+    return false;
+  }
+  return true;
+}
+
 
     function validarAvanzado(form) {
-      const titulo = form.titulo.value.trim();
-      const isbn = form.isbn.value.trim();
-      const editorial = form.editorial.value.trim();
-      const fecha = form.fecha.value.trim();
+  const campos = [
+    form.titulo?.value.trim(),
+    form.autor?.value.trim(),
+    form.editorial?.value.trim(),
+    form["año_desde"]?.value.trim(),
+    form["año_hasta"]?.value.trim(),
+    form.idioma?.value.trim(),
+    form.rating_min?.value.trim()
+  ];
 
-      if (!titulo && !isbn && !editorial && !fecha) {
-        alert("Ingresa al menos un filtro para aplicar búsqueda avanzada.");
-        return false;
-      }
-      if (titulo && !validarTitulo({ titulo: { value: titulo } })) return false;
-      return true;
-    }
+  // Verifica si al menos uno de los campos tiene contenido
+  const hayContenido = campos.some(valor => valor && valor !== "");
+
+  if (!hayContenido) {
+    mostrarModalError("⚠️ Ingresa al menos un filtro para aplicar búsqueda avanzada.");
+    return false;
+  }
+
+
+
+  // Validación de rating
+  const ratingMin = parseFloat(form.rating_min?.value);
+  if (!isNaN(ratingMin) && (ratingMin < 0 || ratingMin > 5)) {
+    mostrarModalError("⚠️ El rating debe estar entre 0.0 y 5.0.");
+    return false;
+  }
+
+  return true;
+}
+function validarEditorial(valor) {
+  const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
+  if (!regex.test(valor)) {
+    mostrarModalError("⚠️ La editorial no debe contener números ni caracteres especiales.");
+    return false;
+  }
+  return true;
+}
+
+function validarISBN(valor) {
+  const regex = /^\d+$/;
+  if (!regex.test(valor)) {
+    mostrarModalError("⚠️ El ISBN solo debe contener números.");
+    return false;
+  }
+  return true;
+}
+
+// Para formularios básicos:
+function validarEditorialBasico(form) {
+  const input = form.editorial;
+  if (!validarEditorial(input.value.trim())) {
+    input.value = '';
+    return false;
+  }
+  return true;
+}
+
+function validarISBNBasico(form) {
+  const input = form.isbn;
+  if (!validarISBN(input.value.trim())) {
+    input.value = '';
+    return false;
+  }
+  return true;
+}
+
   </script>
 </body>
 </html>

@@ -28,9 +28,11 @@ app = Flask(
 def libros():
     titulo = request.args.get("titulo")
     isbn = request.args.get("isbn")
-    fecha = request.args.get("fecha")
     editorial = request.args.get("editorial")
-    resultado = obtener_libros(titulo, isbn, fecha, editorial)
+    autor = request.args.get("autor")
+    idioma = request.args.get("idioma")
+    rating_min = request.args.get("rating_min")
+    resultado = obtener_libros(titulo, isbn, editorial, autor, idioma, rating_min)
     return render_template("libros.html", libros=resultado)
 
 
