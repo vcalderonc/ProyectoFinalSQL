@@ -8,27 +8,22 @@ def conectar_movies():
     return db
 
 #peliculas MONGO-------------
-def obtener_peliculas(titulo=None, anio=None):
+def obtener_peliculas(titulo=None, anio=None, genero=None):
     db = conectar_movies()
     coleccion = db["movies"]
     query = {}
 
-    if titulo and anio:
-        try:
-            query = {
-                "titulo": {"$regex": titulo, "$options": "i"},
-                "año": int(anio)
-            }
-        except ValueError:
-            query = {"titulo": {"$regex": titulo, "$options": "i"}}
-    elif titulo:
-        query = {"titulo": {"$regex": titulo, "$options": "i"}}
-    elif anio:
-        try:
-            query = {"año": int(anio)}
-        except ValueError:
-            query = {}
+    if titulo and titulo.strip():
+        query["titulo"] = {"$regex": titulo.strip(), "$options": "i"}
 
+    if anio:
+        try:
+            query["año"] = int(anio)
+        except ValueError:
+            pass
+
+    # ⚠️ No filtramos por género, solo aceptamos el argumento para evitar el error
+    print(">>> QUERY PELÍCULAS:", query)
     return list(coleccion.find(query, {"_id": 0}))
 
 #LIBROS MONGO

@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo de Películas - EntreCOL+</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='Resources/logoweb.svg') }}">
+
   <link rel="stylesheet" href="{{ url_for('static', filename='peliculas.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='styleinicio.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -78,7 +80,7 @@
 
     <!-- Filtros avanzados -->
     <section class="filtro-box" style="max-width: none; width: 90%;">
-      <h2>Filtros Avanzados</h2>
+      <h2>Filtros de películas Avanzados</h2>
       <form method="get" action="#resultados" onsubmit="return validarAvanzado(this)">
         <div style="display: flex; flex-wrap: wrap; gap: 12px;">
           <input type="text" name="titulo" class="input-field" placeholder="Título">
@@ -91,7 +93,7 @@
     <!-- Resultados -->
     <section class="resultados" id="resultados">
       <h1>Resultados</h1>
-      <h3>Tus búsquedas aquí</h3>
+      <h3>Tus búsquedas de películas aquí</h3>
 
       {% if peliculas %}
         <div class="peliculas-grid">
@@ -99,6 +101,18 @@
             <div class="pelicula-card">
               <h3>{{ pelicula.titulo }}</h3>
               <p><strong>Año:</strong> {{ pelicula.año }}</p>
+          {% if pelicula.generos %}
+  <div style="margin-top: 8px;">
+    {% for genero in pelicula.generos %}
+      <span style="display: inline-block; background-color: #444; color: #fff; padding: 4px 10px; margin: 2px; border-radius: 12px; font-size: 13px;">
+        {{ genero }}
+      </span>
+    {% endfor %}
+  </div>
+{% endif %}
+
+
+
             </div>
           {% endfor %}
         </div>

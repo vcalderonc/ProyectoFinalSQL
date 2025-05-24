@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catálogo de Libros - EntreCOL+</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='Resources/logoweb.svg') }}">
+
   <link rel="stylesheet" href="{{ url_for('static', filename='libros.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='styleinicio.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -88,9 +90,9 @@
 
     <!-- Filtros avanzados mejorados -->
 <section class="filtro-box" style="max-width: none; width: 90%;">
-  <h2>Filtros Avanzados</h2>
+  <h2>Filtros de libros Avanzados</h2>
   <p style="text-align:center; color:#aaa; font-size:14px;">
-    Puedes combinar múltiples criterios. Encuentra aquí lo que buscas
+    Puedes combinar múltiples criterios. Encuentra aquí tus libros y todo lo que necesitas.
   </p>
   <form method="get" action="#resultados" onsubmit="return validarAvanzado(this)">
     <div style="display: flex; flex-wrap: wrap; gap: 12px;">
@@ -120,7 +122,7 @@
     <!-- Resultados -->
     <section class="resultados" id="resultados">
       <h1>Resultados</h1>
-      <h3>Tus búsquedas aquí</h3>
+      <h3>Tus búsquedas de librosaquí</h3>
       {% if libros %}
         <div class="peliculas-grid">
           {% for libro in libros %}

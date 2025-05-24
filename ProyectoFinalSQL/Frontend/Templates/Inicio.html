@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EntreCOL+</title>
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='Resources/logoweb.svg') }}">
 
   <!-- Estilos -->
   <link rel="stylesheet" href="{{ url_for('static', filename='styleinicio.css') }}">
@@ -140,6 +141,25 @@
       </div>
     </div>
   </div>
+<footer class="footer-info" style="margin-top: 60px; padding: 40px 6.5vw; text-align: center; background-color: #111; color: #fff;">
+  <h3 style="font-weight: 600; font-size: 18px; margin-bottom: 16px;">Recursos y apoyo</h3>
+  <div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; font-size: 22px;">
+
+    <a href="https://entrecol.docs.example.com" target="_blank" title="Documentación técnica" style="color: #ccc; text-decoration: none;">
+      <i class="fas fa-book"></i><br>Documentación
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=TuVideoID" target="_blank" title="Tutorial en video" style="color: #ccc; text-decoration: none;">
+      <i class="fab fa-youtube"></i><br>Video tutorial
+    </a>
+
+    <a href="mailto:soporte@entrecol.com" title="Soporte técnico por correo" style="color: #ccc; text-decoration: none;">
+      <i class="fas fa-envelope"></i><br>Contacto
+    </a>
+
+  </div>
+  <p style="margin-top: 24px; font-size: 14px; color: #777;">&copy; {{ year }} EntreCOL+. Todos los derechos reservados.</p>
+</footer>
 
   <!-- Scripts -->
   <script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
