@@ -9,55 +9,37 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <div class="main-wrapper">
-    <!-- Header con buscador estilo películas -->
-    <header class="custom-header">
-      <div class="logo">
-        <a href="{{ url_for('inicio') }}">
-          <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
-        </a>
+    <!-- Header con logo y título -->
+    <header class="custom-header" style="display: flex; align-items: center; justify-content: space-between; padding-inline: 6.5vw;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="logo">
+          <a href="{{ url_for('inicio') }}">
+            <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
+          </a>
+        </div>
+        <h1 class="header-title" style="font-size: 1.8rem; margin: 0;">Libros</h1>
       </div>
-
-      <div class="header-actions">
-        <!-- Formulario general con ID para activar submit desde el botón Buscar -->
-        <form method="get" class="search-form expanded" id="form-busqueda">
-          <button type="submit" class="search-toggle">
-            <i class="fas fa-search"></i>
-          </button>
-          <input type="text" name="titulo" class="search-input" placeholder="Título del libro" value="{{ request.args.get('titulo', '') }}">
-          <input type="text" name="isbn" class="search-input" placeholder="ISBN" value="{{ request.args.get('isbn', '') }}">
-          <input type="text" name="editorial" class="search-input" placeholder="Editorial" value="{{ request.args.get('editorial', '') }}">
-          <input type="text" name="fecha" class="search-input" placeholder="Fecha" value="{{ request.args.get('fecha', '') }}">
-        </form>
-
-        <!-- Botón que lanza submit al formulario de búsqueda -->
-        <button type="submit" form="form-busqueda" class="login-btn">
-          <i class="fas fa-search"></i> Buscar
-        </button>
-
-        <!-- Menú lateral -->
-        <div class="menu-wrapper">
-          <div class="menu-icon" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-          </div>
-          <div id="side-menu" class="side-menu">
-            <ul>
-              <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-              <li><a href="/peliculas">Películas</a></li>
-            </ul>
-          </div>
+      <div class="menu-wrapper">
+        <div class="menu-icon" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div id="side-menu" class="side-menu">
+          <ul>
+            <li><a href="{{ url_for('peliculas') }}">Catálogo películas</a></li>
+            <li><a href="{{ url_for('libros') }}">Catálogo libros</a></li>
+          </ul>
         </div>
       </div>
     </header>
 
-    <!-- Hero con video local (mismo estilo de películas) -->
+    <!-- Hero con video -->
     <section class="hero-section secondary-hero">
       <div class="hero-text">
         <h1>Una colección viva de libros</h1>
-        <p>Descubre títulos seleccionados por su valor narrativo, visual y editorial.<br>
-           Explora la palabra como archivo y legado vivo. Filtra por autor, editorial o año para descubrir obras relevantes.</p>
+        <p>Explora ediciones seleccionadas por su impacto narrativo, visual y editorial.<br>
+           Sumérgete en obras significativas a través de filtros precisos y curados.</p>
       </div>
       <div class="hero-image">
         <video autoplay muted loop playsinline>
@@ -67,17 +49,56 @@
       </div>
     </section>
 
+    <!-- Filtros básicos -->
+    <section style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+      <div class="filtro-box" style="min-width: 400px;">
+        <h1>Busca por título</h1>
+        <form method="get" action="#resultados" onsubmit="return validarTitulo(this)">
+          <input type="text" class="input-field" name="titulo" placeholder="Título del libro">
+          <button type="submit" class="button1">Buscar</button>
+        </form>
+      </div>
+
+      <div class="filtro-box" style="min-width: 400px;">
+        <h1>Busca por ISBN</h1>
+        <form method="get" action="#resultados">
+          <input type="text" class="input-field" name="isbn" placeholder="ISBN">
+          <button type="submit" class="button1">Buscar</button>
+        </form>
+      </div>
+    </section>
+
+     <div class="filtro-box" style="min-width: 400px;">
+        <h1>Busca por editorial</h1>
+        <form method="get" action="#resultados">
+          <input type="text" class="input-field" name="editorial" placeholder="Editorial">
+          <button type="submit" class="button1">Buscar</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Filtros avanzados -->
+    <section class="filtro-box" style="max-width: none; width: 90%;">
+      <h2>Filtros Avanzados</h2>
+      <form method="get" action="#resultados" onsubmit="return validarAvanzado(this)">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <input type="text" name="titulo" class="input-field" placeholder="Título">
+          <input type="text" name="isbn" class="input-field" placeholder="ISBN">
+          <input type="text" name="editorial" class="input-field" placeholder="Editorial">
+          <input type="text" name="fecha" class="input-field" placeholder="Fecha de publicación">
+        </div>
+        <button type="submit" class="button1" style="margin-top: 16px;">Filtrar</button>
+      </form>
+    </section>
+
     <!-- Resultados -->
-    <section class="resultados">
+    <section class="resultados" id="resultados">
       <h1>Resultados</h1>
       <h3>Tus búsquedas aquí</h3>
-      <div class="peliculas-grid">
-        {% if libros %}
+      {% if libros %}
+        <div class="peliculas-grid">
           {% for libro in libros %}
             <div class="pelicula-card">
-              <div class="poster-container">
-                <!-- Imagen futura o miniatura -->
-              </div>
               <h3>{{ libro.title }}</h3>
               <p><strong>Autor:</strong> {{ libro.authors }}</p>
               <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
@@ -86,76 +107,80 @@
               <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
             </div>
           {% endfor %}
-        {% else %}
-          <p>No se encontraron libros.</p>
-        {% endif %}
-      </div>
+        </div>
+      {% else %}
+        <div class="error-message">
+          {% if request.args %}
+            No se encontraron libros con los filtros seleccionados.
+          {% else %}
+            Aún no se han realizado búsquedas.
+          {% endif %}
+        </div>
+      {% endif %}
+    </section>
+     <!-- Filtros avanzados -->
+    <section class="filtro-box" style="max-width: none; width: 90%;">
+      <h2>Filtros Avanzados</h2>
+      <form method="get" action="#resultados">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <input type="text" name="titulo" class="input-field" placeholder="Título">
+          <input type="text" name="autor" class="input-field" placeholder="Autor">
+          <input type="text" name="editorial" class="input-field" placeholder="Editorial">
+          <input type="text" name="fecha" class="input-field" placeholder="Fecha publicación (MM/DD/AAAA)">
+        </div>
+        <button type="submit" class="button1" style="margin-top: 16px;">Filtrar</button>
+      </form>
     </section>
 
-
-  {% if libros %}
-    <div class="peliculas-grid">
-      {% for libro in libros %}
+    <!-- Resultados -->
+    <section class="resultados" id="resultados">
+      <h1>Resultados</h1>
+      <h3>Tus búsquedas aquí</h3>
+      <div class="peliculas-grid">
         <div class="pelicula-card">
-          <h3>{{ libro.title }}</h3>
-          <p><strong>Autor:</strong> {{ libro.authors }}</p>
-          <p><strong>ISBN:</strong> {{ libro.isbn }}</p>
-          <p><strong>Editorial:</strong> {{ libro.publisher }}</p>
-          <p><strong>Fecha publicación:</strong> {{ libro.publication_date }}</p>
-          <p><strong>Rating:</strong> {{ libro.average_rating }}</p>
+          <h3>Harry Potter (J.K. Rowling / Mary GrandPré)</h3>
+          <p><strong>Autor:</strong> J.K. Rowling / Mary GrandPré</p>
+          <p><strong>ISBN:</strong> 0439358078</p>
+          <p><strong>Editorial:</strong> Scholastic Inc.</p>
+          <p><strong>Fecha publicación:</strong> 01/09/2004</p>
+          <p><strong>Rating:</strong> 4.49</p>
         </div>
-      {% endfor %}
-    </div>
-  {% else %}
-    <div class="error-message" style="margin-top: 0;">
-      {% if request.args.get('titulo') and request.args.get('isbn') and request.args.get('icbn') %}
-        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con ISBN <strong>{{ request.args.get('isbn') }}</strong> y ICBN <strong>{{ request.args.get('icbn') }}</strong>.
-      {% elif request.args.get('titulo') and request.args.get('isbn') %}
-        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con ISBN <strong>{{ request.args.get('isbn') }}</strong>.
-      {% elif request.args.get('titulo') and request.args.get('icbn') %}
-        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>" con ICBN <strong>{{ request.args.get('icbn') }}</strong>.
-      {% elif request.args.get('isbn') and request.args.get('icbn') %}
-        No existe ningún libro con ISBN <strong>{{ request.args.get('isbn') }}</strong> y ICBN <strong>{{ request.args.get('icbn') }}</strong>.
-      {% elif request.args.get('titulo') %}
-        No existe ningún libro titulado "<strong>{{ request.args.get('titulo') }}</strong>".
-      {% elif request.args.get('isbn') %}
-        No existe ningún libro con ISBN <strong>{{ request.args.get('isbn') }}</strong>.
-      {% elif request.args.get('icbn') %}
-        No existe ningún libro con ICBN <strong>{{ request.args.get('icbn') }}</strong>.
-      {% else %}
-        No se encontraron libros que coincidan con su búsqueda.
-      {% endif %}
-    </div>
-  {% endif %}
-</section>
-
+      </div>
+    </section>
+  </div>
 
   </div>
 
-  <!-- Script para menú y búsqueda funcional -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById("side-menu");
       menu.classList.toggle("show");
     }
 
-    document.addEventListener("click", function(e) {
-      const menu = document.getElementById("side-menu");
-      const icon = document.querySelector(".menu-icon");
-      if (!menu.contains(e.target) && !icon.contains(e.target)) {
-        menu.classList.remove("show");
+    function validarTitulo(form) {
+      const titulo = form.titulo.value.trim();
+      const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s\d]+$/;
+
+      if (!titulo || /^\d/.test(titulo) || !regex.test(titulo)) {
+        alert("El título no puede comenzar con número ni contener caracteres especiales.");
+        return false;
       }
-    });
+      return true;
+    }
 
-    // Reforzar comportamiento del formulario al segundo intento
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("form-busqueda");
-      form.classList.add("expanded");
+    function validarAvanzado(form) {
+      const titulo = form.titulo.value.trim();
+      const isbn = form.isbn.value.trim();
+      const editorial = form.editorial.value.trim();
+      const fecha = form.fecha.value.trim();
 
-      form.addEventListener("submit", function () {
-        form.classList.add("expanded"); // evita que colapse
-      });
-    });
+      if (!titulo && !isbn && !editorial && !fecha) {
+        alert("Ingresa al menos un filtro para aplicar búsqueda avanzada.");
+        return false;
+      }
+      if (titulo && !validarTitulo({ titulo: { value: titulo } })) return false;
+      return true;
+    }
   </script>
 </body>
 </html>

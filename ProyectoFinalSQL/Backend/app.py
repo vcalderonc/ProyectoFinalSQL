@@ -38,7 +38,7 @@ def libros():
 def peliculas():
     titulo = request.args.get("titulo")
     anio = request.args.get("anio")
-   # genero = request.args.getlist("genero")
+    genero = request.args.getlist("genero")
     resultado = obtener_peliculas(titulo, anio)
     return render_template("peliculas.html", peliculas=resultado)
 # ----------------------------
