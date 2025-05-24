@@ -1,178 +1,69 @@
-/* ------------------ BASE ------------------ */
-body {
-  margin: 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #000;
-  color: #fff;
+.input-field {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #222;
+    color: white;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
-/* ------------------ HEADER ------------------ */
-header {
-  background-color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 6.5vw;
-  position: relative;
-  border-bottom: 1px solid #222;
+.input-field::placeholder {
+    color: #aaa;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.login-btn {
+    background-color: #1e4032;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.logo img {
-  height: 48px;
-  max-height: 60px;
-  width: auto;
+.login-btn:hover {
+    background-color: #1e4032;
 }
 
-.menu-icon {
-  position: absolute;
-  right: 6.5vw;
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
+#resultadoEmpleado {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 16px;
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    max-width: 1000px;
+    margin: auto;
 }
 
-/* ------------------ MENÚ DESPLEGABLE ------------------ */
-.dropdown-menu {
-  display: none;
-  background-color: #111;
-  color: #fff;
-  padding: 10px 20px;
-  position: absolute;
-  top: 80px;
-  right: 0;
-  border-radius: 12px;
-  z-index: 999;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+button.exportar-pdf {
+    margin-top: 20px;
+    background-color: #1e4032;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
 }
 
-.dropdown-menu ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+button.exportar-pdf:hover {
+    background-color: #1e4032;
 }
 
-.dropdown-menu li {
-  padding: 10px 0;
+.empleado-banner {
+    background-color: #1e4032;
+    border-radius: 20px;
+    text-align: center;
+    padding: 24px 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    /* 👈 esta línea nueva */
 }
 
-.dropdown-menu a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.dropdown-menu li:hover {
-  background-color: #222;
-}
-
-/* ------------------ BUSCADOR ------------------ */
-.buscar-empleado {
-  margin: 40px auto;
-  padding: 30px;
-  max-width: 800px;
-  background-color: #111;
-  border-radius: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-.buscar-empleado h2 {
-  margin-bottom: 20px;
-  font-size: 20px;
-}
-
-.buscar-empleado input {
-  padding: 10px;
-  width: 250px;
-  border-radius: 9999px;
-  border: 1px solid #555;
-  background-color: #000;
-  color: #fff;
-  margin-right: 10px;
-}
-
-.buscar-empleado button {
-  padding: 10px 20px;
-  background-color: #6a6aff;
-  color: #fff;
-  border: none;
-  border-radius: 9999px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.buscar-empleado button:hover {
-  background-color: #4d4dd6;
-}
-
-/* ------------------ RESULTADO EMPLEADO ------------------ */
-.resultado-empleado {
-  background-color: #111;
-  margin: 40px auto;
-  padding: 30px;
-  max-width: 900px;
-  border-radius: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-}
-
-.resultado-empleado h3 {
-  color: #6a6aff;
-  margin-bottom: 20px;
-  font-size: 18px;
-  text-align: center;
-}
-
-.resultado-empleado table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 30px;
-  background-color: #1a1a1a;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.resultado-empleado th,
-.resultado-empleado td {
-  padding: 14px;
-  text-align: left;
-  border-bottom: 1px solid #333;
-  font-size: 14px;
-}
-
-.resultado-empleado th {
-  color: #aaa;
-}
-
-.resultado-empleado td {
-  color: #fff;
-}
-
-/* ------------------ BOTÓN PDF ------------------ */
-.boton-pdf-container {
-  text-align: center;
-  margin-top: 30px;
-}
-
-.boton-pdf {
-  background-color: #6a6aff;
-  color: white;
-  padding: 12px 24px;
-  font-size: 15px;
-  border-radius: 9999px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.boton-pdf:hover {
-  background-color: #4d4dd6;
-  transform: translateY(-2px);
+.empleado-banner h1 {
+    font-size: 24px;
+    margin: 10px 0;
+    color: #ffffff;
+    font-weight: 700;
 }

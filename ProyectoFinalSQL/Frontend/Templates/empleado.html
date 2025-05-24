@@ -1,69 +1,60 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Panel de Empleado - EntreCOL+</title>
+  <title>Panel Empleado | EntreCOL+</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styleinicio.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='empleado.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body style="background-color: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;">
   <div class="main-wrapper">
-
-    <!-- Header con logo centrado y menú desplegable -->
-    <header>
+    <header class="custom-header">
       <div class="logo">
         <a href="{{ url_for('inicio') }}">
           <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
         </a>
       </div>
-      <div class="menu-icon" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
+      <div class="header-actions">
+        <a href="/login" class="login-btn">Cerrar sesión</a>
+        <div class="menu-wrapper">
+          <div class="menu-icon" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+          </div>
+          <div id="side-menu" class="side-menu">
+            <ul>
+              <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </header>
 
-    <div id="side-menu" class="dropdown-menu">
-      <ul>
-        <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-        <li><a href="/login">Cerrar sesión</a></li>
-      </ul>
-    </div>
+    <main class="main-wrapper">
+      <section class="empleado-banner">
+        <h1>Empleado</h1>
+      </section>
 
-    <!-- Carrusel visual mejorado -->
-    <section class="carousel-wrapper">
-      <h2 class="carousel-title">Selección de empleados del mes</h2>
-      <div class="carousel-container peliculas-carousel">
-        <button class="carousel-btn left" onclick="scrollCarouselPeliculas(-1)">&#10094;</button>
-        <div class="carousel-track" id="carousel-track-peliculas">
-          <img src="{{ url_for('static', filename='Resources/1.png') }}" alt="Empleado 1">
-          <img src="{{ url_for('static', filename='Resources/2.png') }}" alt="Empleado 2">
-          <img src="{{ url_for('static', filename='Resources/3.png') }}" alt="Empleado 3">
-          <img src="{{ url_for('static', filename='Resources/4.png') }}" alt="Empleado 4">
-        </div>
-        <button class="carousel-btn right" onclick="scrollCarouselPeliculas(1)">&#10095;</button>
-      </div>
-    </section>
+      
 
-    <!-- Formulario de búsqueda -->
-    <section class="buscar-libros buscar-empleado">
-      <form onsubmit="buscarEmpleado(); return false;">
-        <input type="text" id="codigoEmpleado" placeholder="🔎 Código del empleado">
-        <button type="submit"><i class="fas fa-search"></i> Buscar</button>
-      </form>
-    </section>
+      <section class="buscar-empleado" style="background-color: #111; border-radius: 16px; padding: 30px; text-align: center;">
+        <h2 style="margin-bottom: 20px;">Consulta tu Nómina</h2>
+        <input type="text" id="codigoEmpleado" placeholder="Código del empleado" class="input-field" style="width: 200px;">
+        <input type="text" id="nombreEmpleado" placeholder="Nombre del empleado" class="input-field" style="width: 200px; margin-left: 10px;">
+        <button onclick="consultarNomina()" class="login-btn" style="margin-left: 10px;">Consultar</button>
+      </section>
 
-    <!-- Resultado -->
-    <section class="resultados">
-      <h2>Resultado</h2>
-      <div id="resultadoEmpleado" class="resultado-empleado"></div>
-    </section>
+      <section id="nomina-empleado" style="display: none; margin-top: 40px;">
+      </section>
 
-  </div>
 
-  <script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
+
+    </main>
+
   <script src="{{ url_for('static', filename='scripts/empleado.js') }}"></script>
 </body>
 </html>
