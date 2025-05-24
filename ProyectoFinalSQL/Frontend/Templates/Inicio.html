@@ -165,7 +165,7 @@
   <script src="{{ url_for('static', filename='scripts/Inicioscript.js') }}"></script>
 
   <!-- Mostrar el modal solo si hay error -->
-  <script></script>
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       {% if error %}
         const modal = document.getElementById("loginModal");
