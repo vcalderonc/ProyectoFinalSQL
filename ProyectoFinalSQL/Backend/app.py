@@ -523,8 +523,12 @@ def admin_filtro_avanzado():
             e.codigo_empleado, e.nombre_empleado, e.apellido_empleado, e.sueldo, 
             c.nombre_cargo, d.nombre_dependencia,
             eps.nombre_eps, arl.nombre_arl, p.nombre_pension,
-            v.fecha_inicio AS vac_inicio, v.fecha_fin AS vac_fin,
-            i.fecha_inicio AS inc_inicio, i.fecha_fin AS inc_fin, i.tipo_incapacidad
+            e.fecha_ingreso, 
+            v.fecha_inicio AS vac_inicio, 
+            v.fecha_fin AS vac_fin,
+            i.fecha_inicio AS inc_inicio, 
+            i.fecha_fin AS inc_fin, 
+            i.tipo_incapacidad
         FROM Empleado e
         JOIN Cargo c ON e.id_cargo = c.id_cargo
         JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
