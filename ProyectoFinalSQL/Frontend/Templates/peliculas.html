@@ -151,7 +151,7 @@
       const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s\d]+$/;
 
       if (!titulo || /^\d/.test(titulo) || !regex.test(titulo)) {
-        mostrarModalError("⚠️ El título no puede comenzar con número ni contener caracteres especiales.");
+        mostrarModalError(" El título no puede comenzar con número ni contener caracteres especiales.");
         return false;
       }
       return true;
@@ -162,7 +162,7 @@
       const anioActual = new Date().getFullYear();
 
       if (isNaN(anio) || anio < 1880 || anio > anioActual) {
-        mostrarModalError("⚠️ Ingresa un año válido entre 1880 y " + anioActual + ".");
+        mostrarModalError(" Ingresa un año válido entre 1880 y " + anioActual + ".");
         return false;
       }
       return true;
@@ -173,7 +173,7 @@
       const anio = form.anio.value.trim();
 
       if (!titulo && !anio) {
-        mostrarModalError("⚠️ Ingresa al menos un filtro para aplicar búsqueda avanzada.");
+        mostrarModalError(" Ingresa al menos un filtro para aplicar búsqueda avanzada.");
         return false;
       }
 

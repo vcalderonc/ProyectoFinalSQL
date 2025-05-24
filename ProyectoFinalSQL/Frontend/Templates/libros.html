@@ -211,7 +211,7 @@ function validarISBN(valor) {
   const hayContenido = campos.some(valor => valor && valor !== "");
 
   if (!hayContenido) {
-    mostrarModalError("⚠️ Ingresa al menos un filtro para aplicar búsqueda avanzada.");
+    mostrarModalError(" Ingresa al menos un filtro para aplicar búsqueda avanzada.");
     return false;
   }
 
@@ -220,7 +220,7 @@ function validarISBN(valor) {
   // Validación de rating
   const ratingMin = parseFloat(form.rating_min?.value);
   if (!isNaN(ratingMin) && (ratingMin < 0 || ratingMin > 5)) {
-    mostrarModalError("⚠️ El rating debe estar entre 0.0 y 5.0.");
+    mostrarModalError(" El rating debe estar entre 0.0 y 5.0.");
     return false;
   }
 
@@ -229,7 +229,7 @@ function validarISBN(valor) {
 function validarEditorial(valor) {
   const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s]+$/;
   if (!regex.test(valor)) {
-    mostrarModalError("⚠️ La editorial no debe contener números ni caracteres especiales.");
+    mostrarModalError(" La editorial no debe contener números ni caracteres especiales.");
     return false;
   }
   return true;
@@ -238,7 +238,7 @@ function validarEditorial(valor) {
 function validarISBN(valor) {
   const regex = /^\d+$/;
   if (!regex.test(valor)) {
-    mostrarModalError("⚠️ El ISBN solo debe contener números.");
+    mostrarModalError(" El ISBN solo debe contener números.");
     return false;
   }
   return true;
