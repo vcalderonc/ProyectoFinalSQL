@@ -65,10 +65,40 @@ def conectar():
 
 def obtener_empleados():
     conexion = conectar()
-    with conexion:
-        with conexion.cursor() as cursor:
-            cursor.execute("SELECT codigo_empleado, nombre_empleado FROM Empleado")
-            return cursor.fetchall()
+    with conexion.cursor() as cursor:
+        cursor.execute("""
+            SELECT 
+                e.codigo_empleado,
+                e.nombre_empleado,
+                e.apellido_empleado,
+                e.fecha_ingreso,
+                e.sueldo,
+                c.nombre_cargo,
+                d.nombre_dependencia,
+                eps.nombre_eps,
+                arl.nombre_arl,
+                p.nombre_pension,
+                n.dias_trabajados,
+                n.bonificacion,
+                n.transporte,
+                v.fecha_inicio AS vac_inicio,
+                v.fecha_fin AS vac_fin,
+                i.fecha_inicio AS inc_inicio,
+                i.fecha_fin AS inc_fin,
+                i.tipo_incapacidad
+            FROM Empleado e
+            LEFT JOIN Cargo c ON e.id_cargo = c.id_cargo
+            LEFT JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+            LEFT JOIN Eps eps ON e.id_eps = eps.id_eps
+            LEFT JOIN Arl arl ON e.id_arl = arl.id_arl
+            LEFT JOIN Pension p ON e.id_pension = p.id_pension
+            LEFT JOIN NovedadLaboral n ON e.codigo_empleado = n.codigo_empleado
+            LEFT JOIN Vacacion v ON v.id_novedad = n.id_novedad
+            LEFT JOIN Incapacidad i ON i.id_novedad = n.id_novedad
+        """)
+        return cursor.fetchall()
+
+
 
 def empleados_por_dependencia():
     conexion = conectar()
@@ -139,4 +169,21 @@ def obtener_info_completa_empleado(codigo_empleado):
                 WHERE e.codigo_empleado = %s
             """, (codigo_empleado,))
             return cursor.fetchall()
+
+def empleados_por_rango_de_ingreso(desde, hasta):
+    conexion = conectar()
+    with conexion:
+        with conexion.cursor() as cursor:
+            cursor.execute("""
+                SELECT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+                FROM Empleado e
+                JOIN Cargo c ON e.id_cargo = c.id_cargo
+                JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+                JOIN Eps eps ON e.id_eps = eps.id_eps
+                JOIN Arl arl ON e.id_arl = arl.id_arl
+                JOIN Pension p ON e.id_pension = p.id_pension
+                WHERE e.fecha_ingreso BETWEEN %s AND %s
+            """, (desde, hasta))
+            return cursor.fetchall()
+        
 

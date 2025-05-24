@@ -1,3 +1,4 @@
+<!-- admin.html (limpio, sin scripts embebidos) -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -12,15 +13,13 @@
 </head>
 
 <body style="background-color: #000; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;">
-  <div class="main-wrapper"> <!-- ENVOLTORIO agregado como en la página de inicio -->
-
+  <div class="main-wrapper">
     <header class="custom-header">
       <div class="logo">
         <a href="{{ url_for('inicio') }}">
           <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
         </a>
       </div>
-
       <div class="header-actions">
         <a href="/login" class="login-btn">Cerrar sesión</a>
         <div class="menu-wrapper">
@@ -36,27 +35,57 @@
       </div>
     </header>
 
+    <main class="main-container">
+      <section class="admin-banner" style="background-color: #1c1c3c; border-radius: 20px; text-align: center; padding: 20px 30px; margin-top: 30px;">
+        <h1 style="font-size: 22px; color: white; margin: 0;">Administrador</h1>
+      </section>
 
-  <main class="main-wrapper">
-    <section class="admin-banner" style="background-color: #1c1c3c; border-radius: 20px; text-align: center; padding: 20px 30px; margin-top: 30px;">
-      <h1 style="font-size: 22px; color: white; margin: 0;">Administrador</h1>
-    </section>
+      <div class="admin-grid" style="display: flex; gap: 20px; justify-content: center; margin: 30px 0;">
+        <button onclick="abrirModalNovedad()" class="button1" style="background-color: #6a6aff;">Registrar Novedad</button>
+        <button onclick="abrirModal()" class="button1" style="background-color: #6a6aff;">Crear Empleado</button>
+      </div>
 
-    <div class="admin-grid" style="display: flex; gap: 20px; justify-content: center; margin: 30px 0;">
-      <button onclick="abrirModalNovedad()" class="button1" style="background-color: #6a6aff;">Registrar Novedad</button>
-      <button onclick="abrirModal()" class="button1" style="background-color: #6a6aff;">Crear Empleado</button>
-    </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 30px;">
+        <!-- Buscar empleado -->
+        <section class="buscar-empleado" style="background-color: #111; border-radius: 16px; padding: 30px; text-align: center; min-width: 300px; flex: 1;">
+          <h2 style="margin-bottom: 20px;">Buscar Empleado por Código</h2>
+          <input type="text" id="codigoEmpleado" placeholder="Código del empleado" style="padding: 10px; border-radius: 8px; border: none; width: 80%; margin-bottom: 10px;">
+          <br />
+          <button onclick="buscarEmpleado()" class="login-btn" style="width: 80%; margin-top: 10px;">Buscar</button>
+          <button onclick="mostrarTodosLosEmpleados()" class="login-btn" style="width: 80%; margin-top: 10px; background-color: #6a6aff;">Mostrar Todos</button>
+          <button onclick="ocultarResultados()" class="login-btn" style="width: 80%; margin-top: 10px; background-color: #6a6aff;">Ocultar resultados</button>
 
-    <section class="buscar-empleado" style="background-color: #111; border-radius: 16px; padding: 30px; text-align: center;">
-      <h2 style="margin-bottom: 20px;">Buscar Empleado por Código</h2>
-      <input type="text" id="codigoEmpleado" placeholder="Código del empleado" style="padding: 10px; border-radius: 8px; border: none; width: 240px; margin-right: 10px;">
-      <button onclick="buscarEmpleado()" class="login-btn">Buscar</button>
-    </section>
+        </section>
 
-    <div id="resultadoEmpleado" class="resultado-empleado" style="margin-top: 40px;"></div>
-  </main>
+        <!-- Filtros avanzados -->
+        <section style="background-color: #111; border-radius: 16px; padding: 30px; text-align: center; min-width: 320px; flex: 1;">
+          <h2 style="margin-bottom: 20px;">Filtros Avanzados</h2>
+          <select id="filtroCargo" class="input-field" style="width: 100%; margin-bottom: 10px;">
+            <option value="">Filtrar por cargo</option>
+            {% for c in cargos %}
+              <option value="{{ c.id_cargo }}">{{ c.nombre_cargo }}</option>
+            {% endfor %}
+          </select>
+          <input type="number" id="filtroSueldo" class="input-field" placeholder="Sueldo mínimo" style="width: 100%; margin-bottom: 10px;" />
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 10px;">
+            <input type="date" id="filtroDesde" class="input-field" style="flex: 1; min-width: 120px;" />
+            <input type="date" id="filtroHasta" class="input-field" style="flex: 1; min-width: 120px;" />
+          </div>
+          <label style="margin-right: 10px; color: #ccc;"><input type="checkbox" id="checkVacaciones" /> Vacaciones</label>
+          <label style="color: #ccc;"><input type="checkbox" id="checkIncapacidad" /> Incapacidad</label>
+          <div style="margin-top: 20px;">
+            <button onclick="filtrarAvanzado()" class="button1" style="width: 100%; margin-bottom: 10px;">Filtrar</button>
+            <button onclick="limpiarFiltros()" class="button1" style="background-color: #6a6aff; width: 100%;">Limpiar</button>
+          </div>
+        </section>
+      </div>
 
-  <!-- Modales -->
+      <!-- Contenedor de resultados -->
+      <div id="resultadoEmpleado" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 40px;"></div>
+
+    </main>
+
+    <!-- Modales -->
   <!-- MODAL: Crear nuevo empleado -->
   <div id="modalCrearEmpleado" class="modal">
       <div class="modal-content">
@@ -219,10 +248,9 @@
       </div>
   </div>
 
-<script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
+  </div>
 
+  <script src="{{ url_for('static', filename='scripts/admin.js') }}"></script>
 
-
-  <!-- En el script de buscarEmpleado() actualiza esta 
 </body>
 </html>

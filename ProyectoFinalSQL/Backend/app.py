@@ -363,5 +363,208 @@ def index():
 # ----------------------------
 # Ejecutar servidor
 # ----------------------------
+
+
+
+# ----------------------------
+# Consultas JSON de lectura
+# ----------------------------
+
+@app.route("/admin/filtro/vacaciones")
+def admin_filtro_vacaciones():
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute("""
+            SELECT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+            FROM Empleado e
+            JOIN Cargo c ON e.id_cargo = c.id_cargo
+            JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+            JOIN Eps eps ON e.id_eps = eps.id_eps
+            JOIN Arl arl ON e.id_arl = arl.id_arl
+            JOIN Pension p ON e.id_pension = p.id_pension
+            JOIN NovedadLaboral n ON e.codigo_empleado = n.codigo_empleado
+            JOIN Vacacion v ON v.id_novedad = n.id_novedad
+        """)
+        return jsonify(cursor.fetchall())
+
+@app.route("/admin/filtro/incapacidades")
+def admin_filtro_incapacidades():
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute("""
+            SELECT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+            FROM Empleado e
+            JOIN Cargo c ON e.id_cargo = c.id_cargo
+            JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+            JOIN Eps eps ON e.id_eps = eps.id_eps
+            JOIN Arl arl ON e.id_arl = arl.id_arl
+            JOIN Pension p ON e.id_pension = p.id_pension
+            JOIN NovedadLaboral n ON e.codigo_empleado = n.codigo_empleado
+            JOIN Incapacidad i ON i.id_novedad = n.id_novedad
+        """)
+        return jsonify(cursor.fetchall())
+
+@app.route("/admin/filtro/sueldo")
+def admin_filtro_sueldo():
+    sueldo_min = request.args.get("min")
+    if not sueldo_min:
+        return jsonify({"error": "Parámetro 'min' requerido"}), 400
+
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute("""
+            SELECT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+            FROM Empleado e
+            JOIN Cargo c ON e.id_cargo = c.id_cargo
+            JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+            JOIN Eps eps ON e.id_eps = eps.id_eps
+            JOIN Arl arl ON e.id_arl = arl.id_arl
+            JOIN Pension p ON e.id_pension = p.id_pension
+            WHERE e.sueldo > %s
+        """, (sueldo_min,))
+        return jsonify(cursor.fetchall())
+
+@app.route("/admin/filtro/combinar")
+def admin_filtro_combinar():
+    sueldo_min = request.args.get("min")
+    incluir_vac = request.args.get("vac") == "1"
+    incluir_inc = request.args.get("inc") == "1"
+
+    query = """
+        SELECT DISTINCT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+        FROM Empleado e
+        JOIN Cargo c ON e.id_cargo = c.id_cargo
+        JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+        JOIN Eps eps ON e.id_eps = eps.id_eps
+        JOIN Arl arl ON e.id_arl = arl.id_arl
+        JOIN Pension p ON e.id_pension = p.id_pension
+        LEFT JOIN NovedadLaboral n ON e.codigo_empleado = n.codigo_empleado
+        LEFT JOIN Vacacion v ON v.id_novedad = n.id_novedad
+        LEFT JOIN Incapacidad i ON i.id_novedad = n.id_novedad
+        WHERE 1 = 1
+    """
+
+    filtros = []
+    valores = []
+
+    if sueldo_min:
+        filtros.append("e.sueldo > %s")
+        valores.append(sueldo_min)
+
+    if incluir_vac:
+        filtros.append("v.id_vacacion IS NOT NULL")
+
+    if incluir_inc:
+        filtros.append("i.id_incapacidad IS NOT NULL")
+
+    if filtros:
+        query += " AND " + " AND ".join(filtros)
+
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute(query, tuple(valores))
+        return jsonify(cursor.fetchall())
+
+@app.route("/admin/filtro/cargo")
+def admin_filtro_por_cargo():
+    id_cargo = request.args.get("id")
+    if not id_cargo:
+        return jsonify({"error": "Falta parámetro id"}), 400
+
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute("""
+            SELECT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+            FROM Empleado e
+            JOIN Cargo c ON e.id_cargo = c.id_cargo
+            JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+            JOIN Eps eps ON e.id_eps = eps.id_eps
+            JOIN Arl arl ON e.id_arl = arl.id_arl
+            JOIN Pension p ON e.id_pension = p.id_pension
+            WHERE e.id_cargo = %s
+        """, (id_cargo,))
+        return jsonify(cursor.fetchall())
+    
+@app.route("/admin/filtro/fecha")
+def admin_filtro_fecha():
+    desde = request.args.get("desde")
+    hasta = request.args.get("hasta")
+
+    if not desde or not hasta:
+        return jsonify({"error": "Faltan parámetros 'desde' y 'hasta'"}), 400
+
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute("""
+            SELECT e.*, c.nombre_cargo, d.nombre_dependencia, eps.nombre_eps, arl.nombre_arl, p.nombre_pension
+            FROM Empleado e
+            JOIN Cargo c ON e.id_cargo = c.id_cargo
+            JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+            JOIN Eps eps ON e.id_eps = eps.id_eps
+            JOIN Arl arl ON e.id_arl = arl.id_arl
+            JOIN Pension p ON e.id_pension = p.id_pension
+            WHERE e.fecha_ingreso BETWEEN %s AND %s
+        """, (desde, hasta))
+        return jsonify(cursor.fetchall())
+
+@app.route("/admin/filtro/avanzado")
+def admin_filtro_avanzado():
+    sueldo_min = request.args.get("sueldo")
+    id_cargo = request.args.get("cargo")
+    desde = request.args.get("desde")
+    hasta = request.args.get("hasta")
+    incluir_vac = request.args.get("vac") == "1"
+    incluir_inc = request.args.get("inc") == "1"
+
+    query = """
+        SELECT DISTINCT 
+            e.codigo_empleado, e.nombre_empleado, e.apellido_empleado, e.sueldo, 
+            c.nombre_cargo, d.nombre_dependencia,
+            eps.nombre_eps, arl.nombre_arl, p.nombre_pension,
+            v.fecha_inicio AS vac_inicio, v.fecha_fin AS vac_fin,
+            i.fecha_inicio AS inc_inicio, i.fecha_fin AS inc_fin, i.tipo_incapacidad
+        FROM Empleado e
+        JOIN Cargo c ON e.id_cargo = c.id_cargo
+        JOIN Dependencia d ON e.id_dependencia = d.id_dependencia
+        JOIN Eps eps ON e.id_eps = eps.id_eps
+        JOIN Arl arl ON e.id_arl = arl.id_arl
+        JOIN Pension p ON e.id_pension = p.id_pension
+        LEFT JOIN NovedadLaboral n ON e.codigo_empleado = n.codigo_empleado
+        LEFT JOIN Vacacion v ON v.id_novedad = n.id_novedad
+        LEFT JOIN Incapacidad i ON i.id_novedad = n.id_novedad
+        WHERE 1 = 1
+    """
+
+    filtros = []
+    valores = []
+
+    if sueldo_min:
+        filtros.append("e.sueldo > %s")
+        valores.append(sueldo_min)
+
+    if id_cargo:
+        filtros.append("e.id_cargo = %s")
+        valores.append(id_cargo)
+
+    if desde and hasta:
+        filtros.append("e.fecha_ingreso BETWEEN %s AND %s")
+        valores.extend([desde, hasta])
+
+    if incluir_vac:
+        filtros.append("v.id_vacacion IS NOT NULL")
+
+    if incluir_inc:
+        filtros.append("i.id_incapacidad IS NOT NULL")
+
+    if filtros:
+        query += " AND " + " AND ".join(filtros)
+
+    conexion = conectar()
+    with conexion.cursor() as cursor:
+        cursor.execute(query, tuple(valores))
+        resultado = cursor.fetchall()
+
+    return jsonify(resultado)
+
 if __name__ == "__main__":
     app.run(debug=True)
