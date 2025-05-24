@@ -70,41 +70,41 @@ function buscarEmpleado() {
             div.style.animation = "fadeIn 0.3s ease-in-out";
 
             div.innerHTML = `
-        <span onclick="cerrarConAnimacion(this)" style="
-          position:absolute; top:10px; right:14px;
-          font-size:20px; color:#aaa; cursor:pointer; font-weight:bold;">&times;</span>
-        <h3 style="font-size:20px; color:#6a6aff; margin-bottom:20px;">👤 Información del Empleado</h3>
+                <span onclick="cerrarConAnimacion(this)" style="
+                position:absolute; top:10px; right:14px;
+                font-size:20px; color:#aaa; cursor:pointer; font-weight:bold;">&times;</span>
+                <h3 style="font-size:20px; color:#6a6aff; margin-bottom:20px;">👤 Información del Empleado</h3>
 
-        <div style="display: grid; grid-template-columns: 1fr 2fr; row-gap: 10px; margin-bottom: 16px;">
-          <p><strong>Código:</strong></p><p>${emp.codigo_empleado}</p>
-          <p><strong>Nombre:</strong></p><p>${emp.nombre_empleado}</p>
-          <p><strong>Cargo:</strong></p><p>${emp.nombre_cargo}</p>
-          <p><strong>Dependencia:</strong></p><p>${emp.nombre_dependencia}</p>
-          <p><strong>Sueldo:</strong></p><p>$${emp.sueldo}</p>
-          <p><strong>Fecha ingreso:</strong></p><p>${emp.fecha_ingreso}</p>
-          <p><strong>EPS:</strong></p><p>${emp.nombre_eps}</p>
-          <p><strong>ARL:</strong></p><p>${emp.nombre_arl}</p>
-          <p><strong>Pensión:</strong></p><p>${emp.nombre_pension}</p>
-        </div>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; row-gap: 10px; margin-bottom: 16px;">
+                <p><strong>Código:</strong></p><p>${emp.codigo_empleado}</p>
+                <p><strong>Nombre:</strong></p><p>${emp.nombre_empleado}</p>
+                <p><strong>Cargo:</strong></p><p>${emp.nombre_cargo}</p>
+                <p><strong>Dependencia:</strong></p><p>${emp.nombre_dependencia}</p>
+                <p><strong>Sueldo:</strong></p><p>$${emp.sueldo}</p>
+                <p><strong>Fecha ingreso:</strong></p><p>${emp.fecha_ingreso}</p>
+                <p><strong>EPS:</strong></p><p>${emp.nombre_eps}</p>
+                <p><strong>ARL:</strong></p><p>${emp.nombre_arl}</p>
+                <p><strong>Pensión:</strong></p><p>${emp.nombre_pension}</p>
+                </div>
 
-        <div style="background:#1d1d1d; padding:14px; border-radius:12px; margin-bottom:12px;">
-          <h4 style="color:#4caf50; margin-bottom:10px;">🌴 Vacaciones</h4>
-          <p><strong>Inicio:</strong> ${emp.vac_inicio || 'No aplica'}</p>
-          <p><strong>Fin:</strong> ${emp.vac_fin || 'No aplica'}</p>
-        </div>
+                <div style="background:#1d1d1d; padding:14px; border-radius:12px; margin-bottom:12px;">
+                <h4 style="color:#4caf50; margin-bottom:10px;">🌴 Vacaciones</h4>
+                <p><strong>Inicio:</strong> ${emp.vac_inicio || 'No aplica'}</p>
+                <p><strong>Fin:</strong> ${emp.vac_fin || 'No aplica'}</p>
+                </div>
 
-        <div style="background:#1d1d1d; padding:14px; border-radius:12px;">
-          <h4 style="color:#ff9800; margin-bottom:10px;">🏥 Incapacidad</h4>
-          <p><strong>Inicio:</strong> ${emp.inc_inicio || 'No aplica'}</p>
-          <p><strong>Fin:</strong> ${emp.inc_fin || 'No aplica'}</p>
-          <p><strong>Tipo:</strong> ${emp.tipo_incapacidad || 'No aplica'}</p>
-        </div>
+                <div style="background:#1d1d1d; padding:14px; border-radius:12px;">
+                <h4 style="color:#ff9800; margin-bottom:10px;">🏥 Incapacidad</h4>
+                <p><strong>Inicio:</strong> ${emp.inc_inicio || 'No aplica'}</p>
+                <p><strong>Fin:</strong> ${emp.inc_fin || 'No aplica'}</p>
+                <p><strong>Tipo:</strong> ${emp.tipo_incapacidad || 'No aplica'}</p>
+                </div>
 
-        <div style="margin-top:20px; display:flex; gap:10px;">
-          <button onclick="eliminarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#c62828;">Eliminar</button>
-          <button onclick="editarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#1976d2;">Editar</button>
-        </div>
-      `;
+                <div style="margin-top:20px; display:flex; gap:10px;">
+                <button onclick="eliminarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#c62828;">Eliminar</button>
+                <button onclick="editarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#1976d2;">Editar</button>
+                </div>
+            `;
 
             contenedor.appendChild(crearTarjetaEmpleado(emp));
 
@@ -166,6 +166,7 @@ function filtrarAvanzado() {
     if (vac === "1") params.append("vac", "1");
     if (inc === "1") params.append("inc", "1");
 
+
     fetch(`/admin/filtro/avanzado?${params.toString()}`)
         .then(r => r.json())
         .then(data => {
@@ -176,6 +177,11 @@ function filtrarAvanzado() {
                 contenedor.innerHTML = "<p style='text-align:center;'>No se encontraron empleados con esos criterios.</p>";
                 return;
             }
+            if (desde && hasta) {
+                params.append("desde", desde);
+                params.append("hasta", hasta);
+            }
+
 
             data.forEach(emp => {
                 const div = document.createElement("div");
@@ -191,39 +197,39 @@ function filtrarAvanzado() {
                 div.style.animation = "fadeIn 0.3s ease-in-out";
 
                 div.innerHTML = `
-  <span class="close-btn" onclick="cerrarConAnimacion(this)">&times;</span>
-  <h3 style="font-size:20px; color:#6a6aff; margin-bottom:16px;">👤 Información del Empleado</h3>
+                    <span class="close-btn" onclick="cerrarConAnimacion(this)">&times;</span>
+                    <h3 style="font-size:20px; color:#6a6aff; margin-bottom:16px;">👤 Información del Empleado</h3>
 
-  <div style="display: grid; grid-template-columns: 1fr 2fr; row-gap: 8px; margin-bottom: 16px;">
-    <p><strong>Código:</strong></p><p>${emp.codigo_empleado}</p>
-    <p><strong>Nombre:</strong></p><p>${emp.nombre_empleado}</p>
-    <p><strong>Cargo:</strong></p><p>${emp.nombre_cargo}</p>
-    <p><strong>Dependencia:</strong></p><p>${emp.nombre_dependencia}</p>
-    <p><strong>Sueldo:</strong></p><p>$${emp.sueldo}</p>
-    <p><strong>Fecha ingreso:</strong></p><p>${emp.fecha_ingreso}</p>
-    <p><strong>EPS:</strong></p><p>${emp.nombre_eps}</p>
-    <p><strong>ARL:</strong></p><p>${emp.nombre_arl}</p>
-    <p><strong>Pensión:</strong></p><p>${emp.nombre_pension}</p>
-  </div>
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; row-gap: 8px; margin-bottom: 16px;">
+                        <p><strong>Código:</strong></p><p>${emp.codigo_empleado}</p>
+                        <p><strong>Nombre:</strong></p><p>${emp.nombre_empleado}</p>
+                        <p><strong>Cargo:</strong></p><p>${emp.nombre_cargo}</p>
+                        <p><strong>Dependencia:</strong></p><p>${emp.nombre_dependencia}</p>
+                        <p><strong>Sueldo:</strong></p><p>$${emp.sueldo}</p>
+                        <p><strong>Fecha ingreso:</strong></p><p>${emp.fecha_ingreso}</p>
+                        <p><strong>EPS:</strong></p><p>${emp.nombre_eps}</p>
+                        <p><strong>ARL:</strong></p><p>${emp.nombre_arl}</p>
+                        <p><strong>Pensión:</strong></p><p>${emp.nombre_pension}</p>
+                    </div>
 
-  <div style="background:#1d1d1d; padding:14px; border-radius:12px; margin-bottom:12px;">
-    <h4 style="color:#4caf50; margin-bottom:10px;">🌴 Vacaciones</h4>
-    <p><strong>Inicio:</strong> ${emp.vac_inicio || 'No aplica'}</p>
-    <p><strong>Fin:</strong> ${emp.vac_fin || 'No aplica'}</p>
-  </div>
+                    <div style="background:#1d1d1d; padding:14px; border-radius:12px; margin-bottom:12px;">
+                        <h4 style="color:#4caf50; margin-bottom:10px;">🌴 Vacaciones</h4>
+                        <p><strong>Inicio:</strong> ${emp.vac_inicio || 'No aplica'}</p>
+                        <p><strong>Fin:</strong> ${emp.vac_fin || 'No aplica'}</p>
+                    </div>
 
-  <div style="background:#1d1d1d; padding:14px; border-radius:12px;">
-    <h4 style="color:#ff9800; margin-bottom:10px;">🏥 Incapacidad</h4>
-    <p><strong>Inicio:</strong> ${emp.inc_inicio || 'No aplica'}</p>
-    <p><strong>Fin:</strong> ${emp.inc_fin || 'No aplica'}</p>
-    <p><strong>Tipo:</strong> ${emp.tipo_incapacidad || 'No aplica'}</p>
-  </div>
+                    <div style="background:#1d1d1d; padding:14px; border-radius:12px;">
+                        <h4 style="color:#ff9800; margin-bottom:10px;">🏥 Incapacidad</h4>
+                        <p><strong>Inicio:</strong> ${emp.inc_inicio || 'No aplica'}</p>
+                        <p><strong>Fin:</strong> ${emp.inc_fin || 'No aplica'}</p>
+                        <p><strong>Tipo:</strong> ${emp.tipo_incapacidad || 'No aplica'}</p>
+                    </div>
 
-  <div style="margin-top:20px; display:flex; gap:10px;">
-    <button onclick="eliminarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#c62828;">Eliminar</button>
-    <button onclick="editarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#1976d2;">Editar</button>
-  </div>
-`;
+                    <div style="margin-top:20px; display:flex; gap:10px;">
+                        <button onclick="eliminarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#c62828;">Eliminar</button>
+                        <button onclick="editarEmpleado(${emp.codigo_empleado})" class="button1" style="background-color:#1976d2;">Editar</button>
+                    </div>
+                `;
                 contenedor.appendChild(crearTarjetaEmpleado(emp));
 
 
