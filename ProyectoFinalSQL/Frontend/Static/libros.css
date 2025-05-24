@@ -1,4 +1,125 @@
-/* ------------------ ESTILO BASE ------------------ */
+/* ------------------ FILTROS BÁSICOS Y AVANZADOS ------------------ */
+/* ------------------ FILTROS BÁSICOS Y AVANZADOS ------------------ */
+.filtros-basicos {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 40px auto 20px;
+  padding-inline: 6vw;
+}
+
+.filtros-basicos .filtro-box {
+  background-color: #111;
+  border-radius: 16px;
+  padding: 30px;
+  flex: 1 1 400px;
+  max-width: 480px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filtro-box h1,
+.filtro-box h2 {
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.filtro-box .input-field,
+.filtro-box select {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.filtro-box .input-field::placeholder {
+  color: #aaa;
+}
+
+.filtro-box button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #6a6aff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filtro-box button:hover {
+  background-color: #4d4dd6;
+}
+
+/* Filtros avanzados */
+.filtros-avanzados {
+  background-color: #111;
+  border-radius: 16px;
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 92%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.filtros-avanzados h2 {
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.filtros-avanzados .input-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filtros-basicos {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .filtro-box {
+    max-width: 100%;
+  }
+
+  .filtros-avanzados .input-group {
+    flex-direction: column;
+  }
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filtros-basicos {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .filtro-box {
+    max-width: 100%;
+  }
+
+  .filtros-avanzados .input-group {
+    flex-direction: column;
+  }
+}
+/* ------------------ ESTILO BASE ------------------ */ 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   margin: 0;
@@ -60,190 +181,112 @@ header {
   background-color: #222;
 }
 
-/* ------------------ BÚSQUEDA ------------------ */
-.buscar-libros {
+/* ------------------ FILTROS BÁSICOS PERSONALIZADOS ------------------ */
+.filtros-basicos {
   display: flex;
+  gap: 30px;
   justify-content: center;
-  margin: 30px auto;
-}
-
-.buscar-libros form {
-  display: flex;
-  gap: 12px;
-  background-color: #111;
-  border: 1px solid #fff;
-  border-radius: 9999px;
-  padding: 8px 16px;
   flex-wrap: wrap;
-  max-width: 90%;
+  margin-top: 30px;
+  margin-bottom: 20px;
 }
 
-.buscar-libros input {
-  background: transparent;
-  border: none;
-  color: #ccc;
-  font-size: 14px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+.filtros-basicos .filtro-box {
+  background-color: #111;
+  border-radius: 16px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 360px;
+  max-width: 400px;
+  flex: 1;
+  text-align: center;
+}
+
+.filtros-basicos .filtro-box h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.filtros-basicos .filtro-box .input-field,
+.filtros-basicos .filtro-box select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  font-size: 15px;
   outline: none;
-  padding: 8px;
-  width: 160px;
+  box-sizing: border-box;
 }
 
-.buscar-libros button {
+.filtros-basicos .filtro-box button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
   background-color: #6a6aff;
   color: white;
-  border: none;
-  border-radius: 9999px;
-  padding: 8px 20px;
   font-weight: 600;
+  border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.buscar-libros button:hover {
+.filtros-basicos .filtro-box button:hover {
   background-color: #4d4dd6;
 }
 
-/* ------------------ HERO (VIDEO) ------------------ */
-.secondary-hero {
-  background-color: #fff;
-  color: #000;
-  border-radius: 32px;
-  overflow: hidden;
-  max-width: 95%;
-  margin: 40px auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 230px;
-  height: auto;
-  padding: 40px 60px;
-  box-sizing: border-box;
-  flex-wrap: wrap;
-}
-
-.secondary-hero .hero-text {
-  flex: 1;
-  padding-right: 40px;
+/* ------------------ FILTROS AVANZADOS ------------------ */
+.filtro-box-avanzado {
+  background-color: #111;
+  border-radius: 16px;
+  padding: 30px;
+  margin: 30px auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 16px;
+  width: 90%;
+  max-width: 1000px;
 }
 
-.secondary-hero .hero-text h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #000;
-}
-
-.secondary-hero .hero-text p {
-  font-size: 14px;
-  color: #333;
-}
-
-.secondary-hero .hero-image {
-  flex: 1;
-  max-width: 600px;
-  height: 100%;
-  display: flex;
-}
-
-.secondary-hero .hero-image video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0px;
-  border: none;
-}
-
-/* ------------------ RESULTADOS ------------------ */
-.resultados {
-  padding: 40px 6.5vw;
-  margin-top: 40px;
-}
-
-.resultados h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 4px; /* reducido */
-  color: white;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.resultados h3 {
-  font-size: 16px;
-  font-weight: 500;
+.filtro-box-avanzado h2 {
+  font-size: 18px;
+  color: #fff;
   margin-bottom: 16px;
+  text-align: center;
+}
+
+.filtro-box-avanzado .input-field,
+.filtro-box-avanzado select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background-color: #1e1e1e;
+  color: #f1f1f1;
+  font-size: 15px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.filtro-box-avanzado .input-field::placeholder {
   color: #aaa;
 }
 
-/* Mensaje de error bajo h3 */
-.resultados .error-message {
-  background-color: #ffdddd;
-  color: #900;
-  padding: 10px 16px;
-  border-left: 4px solid #c00;
-  border-radius: 8px;
-  margin-top: 0; /* sin espacio extra */
-  margin-bottom: 32px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-/* ------------------ RETÍCULA ------------------ */
-.peliculas-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 32px;
-  justify-items: center;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.pelicula-card {
-  background-color: #111;
-  border: 1px solid #333;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.filtro-box-avanzado button {
   width: 100%;
-  max-width: 280px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #6a6aff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.pelicula-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 0 1px #444;
-}
-
-.pelicula-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-.pelicula-card p {
-  font-size: 14px;
-  color: #ccc;
-  margin: 4px 0;
-}
-
-.pelicula-card p strong {
-  color: #fff;
-}
-
-/* ------------------ RESPONSIVE ------------------ */
-@media (max-width: 768px) {
-  .peliculas-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 20px;
-  }
+.filtro-box-avanzado button:hover {
+  background-color: #4d4dd6;
 }

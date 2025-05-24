@@ -11,45 +11,43 @@
 </head>
 
 <body>
+  <!-- Modal de error -->
+  <div id="modalError" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="cerrarModalError()">&times;</span>
+      <p id="mensajeError">Mensaje de error</p>
+    </div>
+  </div>
+
   <div class="main-wrapper">
-    <header class="custom-header">
-      <div class="logo">
-        <a href="{{ url_for('inicio') }}">
-          <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
-        </a>
+    <!-- Header con logo, título y menú -->
+    <header class="custom-header" style="display: flex; align-items: center; justify-content: space-between; padding-inline: 6.5vw;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="logo">
+          <a href="{{ url_for('inicio') }}">
+            <img src="{{ url_for('static', filename='Resources/Entrecol__logo.svg') }}" alt="EntreCol+ Logo">
+          </a>
+        </div>
+        <h1 class="header-title" style="font-size: 1.8rem; margin: 0;">Películas</h1>
       </div>
-
-      <div class="header-actions">
-        <form method="get" class="search-form expanded" id="form-busqueda">
-          <button type="submit" class="search-toggle">
-            <i class="fas fa-search"></i>
-          </button>
-          <input type="text" name="titulo" class="search-input" placeholder="Buscar películas..." value="{{ request.args.get('titulo', '') }}">
-          <input type="text" name="anio" class="search-input" placeholder="Año" value="{{ request.args.get('anio', '') }}">
-        </form>
-
-        <button type="submit" form="form-busqueda" class="login-btn">
-          <i class="fas fa-search"></i> Buscar
-        </button>
-
-        <div class="menu-wrapper">
-          <div class="menu-icon" onclick="toggleMenu()">
-            <i class="fas fa-bars"></i>
-          </div>
-          <div id="side-menu" class="side-menu">
-            <ul>
-              <li><a href="{{ url_for('inicio') }}">Inicio</a></li>
-              <li><a href="/libros">Libros</a></li>
-            </ul>
-          </div>
+      <div class="menu-wrapper">
+        <div class="menu-icon" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </div>
+        <div id="side-menu" class="side-menu">
+          <ul>
+            <li><a href="{{ url_for('peliculas') }}">Catálogo películas</a></li>
+            <li><a href="{{ url_for('libros') }}">Catálogo libros</a></li>
+          </ul>
         </div>
       </div>
     </header>
 
+    <!-- Hero con video -->
     <section class="hero-section secondary-hero">
       <div class="hero-text">
-        <h1>Un catálogo donde la<br> narrativa cobra vida</h1>
-        <p>Explora una selección curada de películas y libros<br> que no solo cuentan historias, sino que<br> abren espacios de reflexión, estética y memoria.</p>
+        <h1>Explora historias que trascienden la pantalla</h1>
+        <p>Accede a un archivo de películas seleccionadas por su impacto, relevancia cultural y belleza narrativa.</p>
       </div>
       <div class="hero-image">
         <video autoplay muted loop playsinline>
@@ -59,60 +57,140 @@
       </div>
     </section>
 
-    <section class="resultados">
+    <!-- Filtros básicos -->
+    <section style="display: flex; gap: 30px; justify-content: center; flex-wrap: wrap; margin-top: 30px;">
+      <div class="filtro-box" style="min-width: 400px;">
+        <h1>Busca por título</h1>
+        <form method="get" action="#resultados" onsubmit="return validarTitulo(this)">
+          <input type="text" class="input-field" name="titulo" placeholder="Título de la película">
+          <button type="submit" class="button1">Buscar</button>
+        </form>
+      </div>
+
+      <div class="filtro-box" style="min-width: 400px;">
+        <h1>Busca por año</h1>
+        <form method="get" action="#resultados" onsubmit="return validarAnio(this)">
+          <input type="number" class="input-field" name="anio" placeholder="Ej: 1995">
+          <button type="submit" class="button1">Buscar</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Filtros avanzados -->
+    <section class="filtro-box" style="max-width: none; width: 90%;">
+      <h2>Filtros Avanzados</h2>
+      <form method="get" action="#resultados" onsubmit="return validarAvanzado(this)">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <input type="text" name="titulo" class="input-field" placeholder="Título">
+          <input type="number" name="anio" class="input-field" placeholder="Año">
+        </div>
+        <button type="submit" class="button1" style="margin-top: 16px;">Filtrar</button>
+      </form>
+    </section>
+
+    <!-- Resultados -->
+    <section class="resultados" id="resultados">
       <h1>Resultados</h1>
       <h3>Tus búsquedas aquí</h3>
+
       {% if peliculas %}
         <div class="peliculas-grid">
           {% for pelicula in peliculas %}
             <div class="pelicula-card">
-              <div class="poster-container">
-                <!-- Imagen futura -->
-              </div>
               <h3>{{ pelicula.titulo }}</h3>
               <p><strong>Año:</strong> {{ pelicula.año }}</p>
-              {% if pelicula.generos %}
-                <p><strong>Géneros:</strong> {{ pelicula.generos | join(", ") }}</p>
-              {% endif %}
             </div>
           {% endfor %}
         </div>
       {% else %}
-        <div class="error-message" style="margin-top: 0;">
-          {% if request.args.get('titulo') and request.args.get('anio') %}
-            No se encontró ninguna película titulada "<strong>{{ request.args.get('titulo') }}</strong>" del año <strong>{{ request.args.get('anio') }}</strong>.
-          {% elif request.args.get('titulo') %}
-            No se encontró ninguna película titulada "<strong>{{ request.args.get('titulo') }}</strong>".
-          {% elif request.args.get('anio') %}
-            No se encontró ninguna película del año <strong>{{ request.args.get('anio') }}</strong>.
+        <div class="error-message">
+          {% if request.args %}
+            No se encontraron películas con los filtros seleccionados.
           {% else %}
-            No se encontraron películas que coincidan con su búsqueda.
+            Aún no se han realizado búsquedas.
           {% endif %}
         </div>
       {% endif %}
     </section>
   </div>
 
+  <!-- Validaciones y comportamiento -->
   <script>
     function toggleMenu() {
       const menu = document.getElementById("side-menu");
       menu.classList.toggle("show");
     }
 
-    document.addEventListener("click", function(e) {
-      const menu = document.getElementById("side-menu");
-      const icon = document.querySelector(".menu-icon");
-      if (!menu.contains(e.target) && !icon.contains(e.target)) {
-        menu.classList.remove("show");
+    function cerrarModalError() {
+      document.getElementById("modalError").style.display = "none";
+    }
+
+    function mostrarModalError(texto) {
+      const modal = document.getElementById("modalError");
+      const mensaje = document.getElementById("mensajeError");
+      mensaje.textContent = texto;
+      modal.style.display = "flex";
+    }
+
+    function validarTitulo(form) {
+      const titulo = form.titulo.value.trim();
+      const regex = /^[A-Za-zÁÉÍÓÚÑáéíóúñ\s\d]+$/;
+
+      if (!titulo || /^\d/.test(titulo) || !regex.test(titulo)) {
+        mostrarModalError("⚠️ El título no puede comenzar con número ni contener caracteres especiales.");
+        return false;
       }
-    });
+      return true;
+    }
+
+    function validarAnio(form) {
+      const anio = parseInt(form.anio.value, 10);
+      const anioActual = new Date().getFullYear();
+
+      if (isNaN(anio) || anio < 1880 || anio > anioActual) {
+        mostrarModalError("⚠️ Ingresa un año válido entre 1880 y " + anioActual + ".");
+        return false;
+      }
+      return true;
+    }
+
+    function validarAvanzado(form) {
+      const titulo = form.titulo.value.trim();
+      const anio = form.anio.value.trim();
+
+      if (!titulo && !anio) {
+        mostrarModalError("⚠️ Ingresa al menos un filtro para aplicar búsqueda avanzada.");
+        return false;
+      }
+
+      if (titulo && !validarTitulo({ titulo: { value: titulo } })) return false;
+      if (anio && !validarAnio({ anio: { value: anio } })) return false;
+
+      return true;
+    }
 
     document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("form-busqueda");
-      form.classList.add("expanded");
+      const formularios = document.querySelectorAll("form");
+      formularios.forEach(form => {
+        form.addEventListener("submit", function (e) {
+          const titulo = form.querySelector("input[name='titulo']");
+          const anio = form.querySelector("input[name='anio']");
+          const mensaje = document.getElementById("mensajeError");
 
-      form.addEventListener("submit", function () {
-        form.classList.add("expanded");
+          if (anio && anio.value && parseInt(anio.value) < 1800) {
+            e.preventDefault();
+            mensaje.innerText = "Por favor ingresa un año válido (mayor a 1800).";
+            document.getElementById("modalError").style.display = "flex";
+            return;
+          }
+
+          if (titulo && titulo.value.trim().length === 0) {
+            e.preventDefault();
+            mensaje.innerText = "Por favor ingresa un título válido.";
+            document.getElementById("modalError").style.display = "flex";
+            return;
+          }
+        });
       });
     });
   </script>
