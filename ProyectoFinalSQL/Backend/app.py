@@ -14,7 +14,7 @@ from db_mysql import (
     obtener_peliculas,
     obtener_libros
 )
-
+//paulaaaaaaaaaa
 app = Flask(
     __name__,
     template_folder="../frontend/templates",
