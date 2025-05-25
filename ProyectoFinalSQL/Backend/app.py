@@ -20,9 +20,6 @@ app = Flask(
     template_folder="../frontend/templates",
     static_folder="../frontend/static"
 )
-# ----------------------------
-# NoSql
-# ----------------------------
 
 @app.route("/libros", methods=["GET"])
 def libros():
@@ -43,34 +40,17 @@ def peliculas():
     genero = request.args.getlist("genero")
     resultado = obtener_peliculas(titulo, anio, genero)
     return render_template("peliculas.html", peliculas=resultado)
-# ----------------------------
-# 
-# ----------------------------
 
-
-
-# SQL-------------------------
-
-# ----------------------------
-# Usuarios ficticios para login
-# ----------------------------
 usuarios = {
     "admin": {"clave": "admin123", "rol": "admin"},
     "empleado": {"clave": "emp123", "rol": "empleado"}
 }
- 
 
-
-# ----------------------------
-# Página principal
-# ----------------------------
 @app.route("/")
 def inicio():
     return render_template("inicio.html")
 
-# ----------------------------
-# Login
-# ----------------------------
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -86,11 +66,7 @@ def login():
         else:
             return render_template("inicio.html", error="Usuario o contraseña incorrectos.")
 
-    return render_template("inicio.html")
 
-# ----------------------------
-# Panel de empleado
-# ----------------------------
 @app.route("/empleado")
 def empleado():
     return render_template("empleado.html")
