@@ -14,7 +14,7 @@ from db_mysql import (
     obtener_peliculas,
     obtener_libros
 )
-//paulaaaaaaaaaa
+
 app = Flask(
     __name__,
     template_folder="../frontend/templates",
@@ -225,6 +225,7 @@ def crear_o_actualizar_novedad():
 def crear_empleado():
     datos = request.form
     conexion = conectar()
+    print("FECHA ENVIADA DESDE FORMULARIO:", datos.get("fecha"))  # 👈 
     with conexion:
         with conexion.cursor() as cursor:
             cursor.execute("""
@@ -257,12 +258,33 @@ def eliminar_empleado():
         return jsonify({"error": "Código requerido"}), 400
 
     conexion = conectar()
-    with conexion:
+    try:
         with conexion.cursor() as cursor:
-            cursor.execute("DELETE FROM Empleado WHERE codigo_empleado = %s", (codigo,))
-        conexion.commit()
+            # Paso 1: Obtener todas las novedades laborales del empleado
+            cursor.execute("SELECT id_novedad FROM NovedadLaboral WHERE codigo_empleado = %s", (codigo,))
+            novedades = cursor.fetchall()
 
-    return jsonify({"mensaje": "Empleado eliminado correctamente"})
+            # Paso 2: Eliminar vacaciones e incapacidades de todas las novedades
+            for novedad in novedades:
+                id_novedad = novedad["id_novedad"]
+                cursor.execute("DELETE FROM Vacacion WHERE id_novedad = %s", (id_novedad,))
+                cursor.execute("DELETE FROM Incapacidad WHERE id_novedad = %s", (id_novedad,))
+            
+            # Paso 3: Eliminar todas las novedades laborales
+            cursor.execute("DELETE FROM NovedadLaboral WHERE codigo_empleado = %s", (codigo,))
+
+            # Paso 4: Eliminar el empleado
+            cursor.execute("DELETE FROM Empleado WHERE codigo_empleado = %s", (codigo,))
+        
+        conexion.commit()
+        return jsonify({"mensaje": "Empleado eliminado correctamente"})
+
+    except Exception as e:
+        conexion.rollback()
+        return jsonify({"error": f"Error al eliminar: {str(e)}"}), 500
+
+
+
 # ----------------------------
 # EDITAR EMPLEADOS
 # ----------------------------

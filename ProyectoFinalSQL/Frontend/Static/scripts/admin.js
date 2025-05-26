@@ -342,6 +342,9 @@ function crearTarjetaEmpleado(emp) {
             <p><strong>EPS:</strong></p><p>${emp.nombre_eps}</p>
             <p><strong>ARL:</strong></p><p>${emp.nombre_arl}</p>
             <p><strong>Pensión:</strong></p><p>${emp.nombre_pension}</p>
+            <p><strong>Días trabajados:</strong></p><p>${emp.dias_trabajados ?? '0'}</p>
+            <p><strong>Bonificación:</strong></p><p>$${emp.bonificacion ?? '0'}</p>
+            <p><strong>Transporte:</strong></p><p>$${emp.transporte ?? '0'}</p>
         </div>
 
         <div style="background:#1d1d1d; padding:14px; border-radius:12px; margin-bottom:12px;">

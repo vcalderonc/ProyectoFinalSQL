@@ -159,7 +159,8 @@ def obtener_info_completa_empleado(codigo_empleado):
                 SELECT 
                     e.codigo_empleado, 
                     e.nombre_empleado, 
-                    e.apellido_empleado,  -- ✅ SE AGREGA ESTA LÍNEA
+                    e.apellido_empleado, 
+                    e.fecha_ingreso,
                     e.sueldo, 
                     c.nombre_cargo, 
                     d.nombre_dependencia,
